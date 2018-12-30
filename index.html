@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.min.css"
+          integrity="sha256-2pUeJf+y0ltRPSbKOeJh09ipQFYxUdct5nTY6GAXswA=" crossorigin="anonymous">
+    <title>Tools by Halulu</title>
+</head>
+<body>
+<section class="section">
+    <div class="container">
+        <h1 class="title">Tools</h1>
+    </div>
+</section>
+<section class="section">
+    <div class="container" id="sha3">
+        <textarea class="textarea" v-model="input">{{ input }}</textarea>
+        <br>
+        <textarea class="textarea">{{ output }}</textarea>
+    </div>
+</section>
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p>
+            <a href="https://tools.halu.lu/" target="_blank"><strong>Tools</strong></a> by <a href="https://halu.lu/"
+                                                                                              target="_blank">Halulu</a>
+        </p>
+    </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/js-sha3@0.8.0/build/sha3.min.js"
+        integrity="sha256-8MpIdXZrWpb1JXVJccjsXDKzvX927WNtletZ0/Ny3oQ=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.min.js"
+        integrity="sha256-ui3vFTgbIIvd9ePh+wF+ju05O3jympV4FyFlpNMV2cw=" crossorigin="anonymous"></script>
+<script>
+    var vm = new Vue({
+        el: '#sha3',
+        data: {
+            input: ''
+        },
+        computed: {
+            output: function () {
+                return sha3_256(this.input)
+            }
+        }
+    })
+</script>
+</body>
+</html>
