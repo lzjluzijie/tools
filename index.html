@@ -8,11 +8,30 @@
     <title>Tools by Halulu</title>
 </head>
 <body>
-<section class="section">
-    <div class="container">
-        <h1 class="title">Tools</h1>
+<nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+        <a class="navbar-item" href="https://bulma.io">
+            <img alt="halulu" src="https://halu.lu/halulu.png" width="30" height="30"><strong>Tools</strong>
+        </a>
     </div>
-</section>
+
+    <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+            <a class="navbar-item">
+                SHA3
+            </a>
+        </div>
+
+        <div class="navbar-end">
+            <div class="navbar-item">
+                <a class="is-light" href="https://github.com/lzjluzijie/tools">
+                    <img alt="github-mark" src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" width="30"
+                         height="30">
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
 <section class="section">
     <div class="container" id="sha3">
         <textarea class="textarea" v-model="input">{{ input }}</textarea>
