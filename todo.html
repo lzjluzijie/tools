@@ -38,13 +38,17 @@
     </div>
 </nav>
 <section class="section">
-    <div class="container" id="sha3">
-        <textarea class="textarea" name="input" id="input" v-model="input"
-                  placeholder="input here">{{ input }}</textarea>
-        <br>
-        <div class="content" id="output"
-             data-clipboard-text="a7ffc6f8bf1ed76651c14756a061d662f580ff4de43b49fa82d80a4b80f8434a">Result: {{ output }}
-            (click to copy)
+    <div class="container">
+        <div id="content" class="content">
+            <p id="text">
+                - More hash functions
+
+                - Encodings
+
+                - JSON
+
+                - Code Beautify/Minify
+            </p>
         </div>
     </div>
 </section>
@@ -56,27 +60,19 @@
         </p>
     </div>
 </footer>
-<script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.min.js"
-        integrity="sha256-ui3vFTgbIIvd9ePh+wF+ju05O3jympV4FyFlpNMV2cw=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/js-sha3@0.8.0/build/sha3.min.js"
-        integrity="sha256-8MpIdXZrWpb1JXVJccjsXDKzvX927WNtletZ0/Ny3oQ=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js"
-        integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked@0.6.0/marked.min.js"
+        integrity="sha256-ypJ65b+4BwdfsQtz1URdUBhJ9L5ijdovxTOdG+x5hsE=" crossorigin="anonymous"></script>
 <script>
-    var vm = new Vue({
-        el: '#sha3',
-        data: {
-            input: ''
-        },
-        computed: {
-            output: function () {
-                var hash = sha3_256(this.input);
-                document.getElementById("output").setAttribute("data-clipboard-text", hash);
-                return hash
-            }
+    var text = "";
+    document.getElementById("text").innerHTML.trim().split('\n').forEach(function (v, i) {
+        if (i===0){
+            text = v;
+            return
         }
+            text = text + v.slice("                ".length) + '\n';
     });
-    new ClipboardJS(document.getElementById('output'));
+    console.log(text);
+    document.getElementById("content").innerHTML = marked(text);
 </script>
 </body>
 </html>
