@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.min.css"
           integrity="sha256-2pUeJf+y0ltRPSbKOeJh09ipQFYxUdct5nTY6GAXswA=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@5.6.3/css/all.min.css"
+          integrity="sha256-lWwvJodqrCBurwAZ2n1MiE73AQgZ6Gr9jWRd6ed7WiQ=" crossorigin="anonymous">
     <title>Tools by Halulu</title>
 </head>
 <body>
@@ -26,11 +28,11 @@
             <a class="navbar-item" href="https://tools.halu.lu/todo.html">
                 TODO
             </a>
+            <a class="navbar-item" href="https://halu.lu/"
+               target="_blank">Halulu</a>
             <div class="navbar-item">
                 <a class="is-light" href="https://github.com/lzjluzijie/tools">
-                    <img alt="github-mark"
-                         src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" width="30"
-                         height="30">
+                    <i class="fab fa-github fa-2x"></i>
                 </a>
             </div>
         </div>
@@ -53,23 +55,16 @@
                   placeholder="input here">{{ input }}</textarea>
         <br>
         <div class="content" id="output">
-            (click to copy) {{ HashName }} result: {{ output }}
+            <p>
+                (click to copy) {{ HashName }} result: {{ output }}
+            </p>
         </div>
     </div>
 </section>
-<footer class="footer">
-    <div class="content has-text-centered">
-        <p>
-            <a href="https://tools.halu.lu/" target="_blank"><strong>Tools</strong></a> by <a href="https://halu.lu/"
-                                                                                              target="_blank">Halulu</a>
-        </p>
-    </div>
-</footer>
 <script src="https://cdn.jsdelivr.net/npm/crypto-js@3.1.9-1/crypto-js.js"
         integrity="sha256-xoJklEMhY9dP0n54rQEaE9VeRnBEHNSfyfHlKkr9KNk=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.min.js"
         integrity="sha256-ui3vFTgbIIvd9ePh+wF+ju05O3jympV4FyFlpNMV2cw=" crossorigin="anonymous"></script>
-<
 <script src="https://cdn.jsdelivr.net/npm/js-sha3@0.8.0/build/sha3.min.js"
         integrity="sha256-8MpIdXZrWpb1JXVJccjsXDKzvX927WNtletZ0/Ny3oQ=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js"

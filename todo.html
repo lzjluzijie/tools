@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.min.css"
           integrity="sha256-2pUeJf+y0ltRPSbKOeJh09ipQFYxUdct5nTY6GAXswA=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@5.6.3/css/all.min.css"
+          integrity="sha256-lWwvJodqrCBurwAZ2n1MiE73AQgZ6Gr9jWRd6ed7WiQ=" crossorigin="anonymous">
     <title>Tools by Halulu</title>
 </head>
 <body>
@@ -26,11 +28,11 @@
             <a class="navbar-item" href="https://tools.halu.lu/todo.html">
                 TODO
             </a>
+            <a class="navbar-item" href="https://halu.lu/"
+               target="_blank">Halulu</a>
             <div class="navbar-item">
                 <a class="is-light" href="https://github.com/lzjluzijie/tools">
-                    <img alt="github-mark"
-                         src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" width="30"
-                         height="30">
+                    <i class="fab fa-github fa-2x"></i>
                 </a>
             </div>
         </div>
@@ -51,24 +53,16 @@
         </div>
     </div>
 </section>
-<footer class="footer">
-    <div class="content has-text-centered">
-        <p>
-            <a href="https://tools.halu.lu/" target="_blank"><strong>Tools</strong></a> by <a href="https://halu.lu/"
-                                                                                              target="_blank">Halulu</a>
-        </p>
-    </div>
-</footer>
 <script src="https://cdn.jsdelivr.net/npm/marked@0.6.0/marked.min.js"
         integrity="sha256-ypJ65b+4BwdfsQtz1URdUBhJ9L5ijdovxTOdG+x5hsE=" crossorigin="anonymous"></script>
 <script>
     var text = "";
     document.getElementById("text").innerHTML.trim().split('\n').forEach(function (v, i) {
-        if (i===0){
+        if (i === 0) {
             text = v;
             return
         }
-            text = text + v.slice("                ".length) + '\n';
+        text = text + v.slice("                ".length) + '\n';
     });
     console.log(text);
     document.getElementById("content").innerHTML = marked(text);
