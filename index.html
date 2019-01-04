@@ -18,15 +18,14 @@
     <div id="navbar-menu" class="navbar-menu">
         <div class="navbar-start">
             <a class="navbar-item">
-                SHA3
-            </a>
-
-            <a class="navbar-item" href="https://tools.halu.lu/todo.html">
-                TODO
+                Hash
             </a>
         </div>
 
         <div class="navbar-end">
+            <a class="navbar-item" href="https://tools.halu.lu/todo.html">
+                TODO
+            </a>
             <div class="navbar-item">
                 <a class="is-light" href="https://github.com/lzjluzijie/tools">
                     <img alt="github-mark"
@@ -37,13 +36,20 @@
         </div>
     </div>
 </nav>
-<section class="section">
-    <div class="container" id="sha3">
+<section class="section" id="main">
+    <div class="container tabs">
+        <ul>
+            <li class="is-active" v-on:click="click"><a data-hash-name="sha3-256">SHA3-256</a></li>
+            <li v-on:click="click"><a data-hash-name="md5">MD5</a></li>
+        </ul>
+    </div>
+    <div class="container" id="hash">
         <textarea class="textarea" name="input" id="input" v-model="input"
                   placeholder="input here">{{ input }}</textarea>
         <br>
         <div class="content" id="output"
-             data-clipboard-text="a7ffc6f8bf1ed76651c14756a061d662f580ff4de43b49fa82d80a4b80f8434a">Result: {{ output }}
+             data-clipboard-text="a7ffc6f8bf1ed76651c14756a061d662f580ff4de43b49fa82d80a4b80f8434a">{{ HashName }}
+            result: {{ output }}
             (click to copy)
         </div>
     </div>
@@ -60,19 +66,39 @@
         integrity="sha256-ui3vFTgbIIvd9ePh+wF+ju05O3jympV4FyFlpNMV2cw=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/js-sha3@0.8.0/build/sha3.min.js"
         integrity="sha256-8MpIdXZrWpb1JXVJccjsXDKzvX927WNtletZ0/Ny3oQ=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-md5@0.7.3/build/md5.min.js"
+        integrity="sha256-MdVyBgdWRaNPRC46VtXStEXkN8+Zc5iJvB1lZisCvDE=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js"
         integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 <script>
-    var vm = new Vue({
-        el: '#sha3',
+    var main = new Vue({
+        el: '#main',
         data: {
-            input: ''
+            input: '',
+            HashName: 'sha3-256',
         },
         computed: {
             output: function () {
-                var hash = sha3_256(this.input);
+                let hash = "error";
+                switch (this.HashName) {
+                    case "sha3-256":
+                        hash = sha3_256(this.input);
+                        break;
+                    case "md5":
+                        hash = md5(this.input);
+                        break;
+                }
                 document.getElementById("output").setAttribute("data-clipboard-text", hash);
                 return hash
+            }
+        },
+        methods: {
+            click: function (event) {
+                for (let i = 0; i < event.target.parentElement.parentElement.children.length; i++) {
+                    event.target.parentElement.parentElement.children[i].classList.remove("is-active")
+                }
+                event.target.parentElement.classList.add("is-active");
+                this.HashName = event.target.getAttribute("data-hash-name");
             }
         }
     });
