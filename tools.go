@@ -1,11 +1,11 @@
 package main
 
 import (
-	"fmt"
-	"html/template"
+	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 var pages = []string{
@@ -19,27 +19,41 @@ func main() {
 		panic(err)
 	}
 
-	t := template.New("")
+	base := readHTML("html/base.html")
 
-	paths, err := filepath.Glob("templates/*")
+	paths, err := filepath.Glob("html/*")
 	if err != nil {
 		panic(err)
 	}
 
 	for _, path := range paths {
 		log.Println(path)
-		t, err = t.ParseFiles(path)
+		if path == "html\\base.html" {
+			continue
+		}
+
+		content := readHTML(path)
+		content = strings.Replace(base, "<!-- base.html -->", content, 1)
+
+		err = ioutil.WriteFile(strings.Replace(path, "html", "gh-pages", 1), []byte(content), 0777)
 		if err != nil {
 			panic(err)
 		}
+
+		//file ,err := os.Create(strings.Replace(path, "html", "gh-pages",1))
+		//if err != nil {
+		//	panic(err)
+		//}
+	}
+	return
+}
+
+func readHTML(filename string) (content string) {
+	data, err := ioutil.ReadFile(filename)
+	if err != nil {
+		panic(err)
 	}
 
-	for _, page := range pages {
-		file, err := os.Create(fmt.Sprintf("gh-pages/%s.html", page))
-		err = t.ExecuteTemplate(file, page, nil)
-		if err != nil {
-			panic(err)
-		}
-	}
+	content = string(data)
 	return
 }
