@@ -25,7 +25,7 @@ func main() {
 
 	for _, path := range paths {
 		log.Println(path)
-		if path == "html\\base.html" {
+		if strings.HasSuffix(path, "base.html") {
 			continue
 		}
 
