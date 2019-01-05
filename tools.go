@@ -24,10 +24,10 @@ func main() {
 	}
 
 	for _, path := range paths {
-		log.Println(path)
 		if strings.HasSuffix(path, "base.html") {
 			continue
 		}
+		log.Println(path)
 
 		content := readHTML(path)
 		content = strings.Replace(base, "<!-- base.html -->", content, 1)
