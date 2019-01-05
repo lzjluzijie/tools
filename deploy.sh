@@ -4,5 +4,5 @@ git clone git@github.com:lzjluzijie/tools.git -b gh-pages gh-pages
 go run tools.go
 cd gh-pages
 git add .
-git commit -m "$(date +%s)"
+git commit -s -m "$(date +%s)"
 git push origin gh-pages
