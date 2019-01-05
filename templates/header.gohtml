@@ -1,3 +1,4 @@
+{{define "header"}}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,34 +39,4 @@
         </div>
     </div>
 </nav>
-<section class="section">
-    <div class="container">
-        <div id="content" class="content">
-            <p id="text">
-                - More hash functions
-
-                - Encodings
-
-                - JSON
-
-                - Code Beautify/Minify
-            </p>
-        </div>
-    </div>
-</section>
-<script src="https://cdn.jsdelivr.net/npm/marked@0.6.0/marked.min.js"
-        integrity="sha256-ypJ65b+4BwdfsQtz1URdUBhJ9L5ijdovxTOdG+x5hsE=" crossorigin="anonymous"></script>
-<script>
-    var text = "";
-    document.getElementById("text").innerHTML.trim().split('\n').forEach(function (v, i) {
-        if (i === 0) {
-            text = v;
-            return
-        }
-        text = text + v.slice("                ".length) + '\n';
-    });
-    console.log(text);
-    document.getElementById("content").innerHTML = marked(text);
-</script>
-</body>
-</html>
+{{ end }}
