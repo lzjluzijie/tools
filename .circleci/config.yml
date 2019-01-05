@@ -1,6 +1,9 @@
 version: 2
 jobs:
   build:
+    branches:
+      ignore:
+        - gh-pages
     docker:
       - image: circleci/golang:1.11.4
     working_directory: /go/src/github.com/lzjluzijie/tools
@@ -13,12 +16,3 @@ jobs:
 
       - run: go get -v -t -d ./...
       - run: bash deploy.sh
-
-workflows:
-  version: 2
-  main:
-    jobs:
-      - build:
-          filters:
-            branches:
-              only: master
