@@ -8,12 +8,9 @@ import (
 	"strings"
 )
 
-var pages = []string{
-	"index",
-	"todo",
-}
-
 func main() {
+	log.SetFlags(log.LstdFlags | log.Lshortfile)
+
 	err := os.Mkdir("gh-pages", 0777)
 	if err != nil && !os.IsExist(err) {
 		panic(err)
@@ -39,11 +36,6 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
-
-		//file ,err := os.Create(strings.Replace(path, "html", "gh-pages",1))
-		//if err != nil {
-		//	panic(err)
-		//}
 	}
 	return
 }
