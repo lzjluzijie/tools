@@ -14,7 +14,11 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-91028451-12"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
         gtag('js', new Date());
 
         gtag('config', 'UA-91028451-12');
@@ -75,6 +79,8 @@
                         <li v-on:click="click"><a class="hash-name" data-hash-name="sha3-512">SHA3-512</a></li>
                         <li v-on:click="click"><a class="hash-name" data-hash-name="sha3-384">SHA3-384</a></li>
                         <li v-on:click="click"><a class="hash-name" data-hash-name="sha3-224">SHA3-224</a></li>
+                        <li v-on:click="click"><a class="hash-name" data-hash-name="shake128">Shake128</a></li>
+                        <li v-on:click="click"><a class="hash-name" data-hash-name="shake256">Shake256</a></li>
                     </ul>
 
                     <p class="menu-label">
@@ -89,16 +95,29 @@
                 </aside>
             </div>
             <div class="column is-10" id="hash">
-                <div class="content">
-                    <p>
-                        Input below, click to copy the hash.
-                    </p>
-                </div>
+                <div class="field" id="input-div">
+                    <div class="content">
+                        <p>
+                            Input below, click to copy the hash.
+                        </p>
+                    </div>
+                    <div class="control">
                 <textarea class="textarea" name="input" id="input" v-model="input"
-                          placeholder="input here">{{ input }}</textarea>
-                <br>
+                          placeholder="input here"></textarea>
+                    </div>
+                </div>
+                <div class="field has-addons" id="bits-div" style="display: none">
+                    <p class="control">
+                        <a class="button">
+                            Output bits
+                        </a>
+                    </p>
+                    <div class="control">
+                        <input class="input" type="text" v-model="bits" placeholder="output bits">
+                    </div>
+                </div>
                 <div class="content" id="output">
-                    <p>
+                    <p style="word-wrap:break-word">
                         {{ HashName }} result: {{ output }}
                     </p>
                 </div>
@@ -112,7 +131,8 @@
         integrity="sha256-ui3vFTgbIIvd9ePh+wF+ju05O3jympV4FyFlpNMV2cw=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/js-sha3@0.8.0/build/sha3.min.js"
         integrity="sha256-8MpIdXZrWpb1JXVJccjsXDKzvX927WNtletZ0/Ny3oQ=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/js-crc@0.2.0/build/crc.min.js" integrity="sha256-NQIhfUJHyhUEVmPl97vqQKtoEPOY3Hvs/glAWAK7/TI=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-crc@0.2.0/build/crc.min.js"
+        integrity="sha256-NQIhfUJHyhUEVmPl97vqQKtoEPOY3Hvs/glAWAK7/TI=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js"
         integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 <script>
@@ -120,6 +140,7 @@
         el: '#main',
         data: {
             input: '',
+            bits: 256,
             HashName: 'sha256',
         },
         computed: {
@@ -153,6 +174,12 @@
                     case "sha3-224":
                         hash = sha3_224(this.input);
                         break;
+                    case "shake128":
+                        hash = shake128(this.input, this.bits);
+                        break;
+                    case "shake256":
+                        hash = shake256(this.input, this.bits);
+                        break;
 
                     //others
                     case "sha1":
@@ -174,12 +201,23 @@
         },
         methods: {
             click: function (event) {
-                var s = document.getElementsByClassName("hash-name");
+                let s = document.getElementsByClassName("hash-name");
                 for (let i = 0; i < s.length; i++) {
                     s[i].classList.remove("is-active")
                 }
                 event.target.classList.add("is-active");
-                this.HashName = event.target.getAttribute("data-hash-name");
+
+                let hashName = event.target.getAttribute("data-hash-name");
+                if (hashName === "shake128") {
+                    this.bits = 256;
+                    document.getElementById("bits-div").style.removeProperty("display")
+                } else if (hashName === "shake256") {
+                    this.bits = 512;
+                    document.getElementById("bits-div").style.removeProperty("display")
+                } else {
+                    document.getElementById("bits-div").style.setProperty("display", "none")
+                }
+                this.HashName = hashName;
             }
         }
     });
