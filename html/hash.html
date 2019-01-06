@@ -12,6 +12,7 @@
                         <li v-on:click="click"><a class="hash-name" data-hash-name="sha384">SHA384</a></li>
                         <li v-on:click="click"><a class="hash-name" data-hash-name="sha224">SHA224</a></li>
                     </ul>
+
                     <p class="menu-label">
                         SHA3
                     </p>
@@ -21,12 +22,14 @@
                         <li v-on:click="click"><a class="hash-name" data-hash-name="sha3-384">SHA3-384</a></li>
                         <li v-on:click="click"><a class="hash-name" data-hash-name="sha3-224">SHA3-224</a></li>
                     </ul>
+
                     <p class="menu-label">
                         Others
                     </p>
                     <ul class="menu-list">
                         <li v-on:click="click"><a class="hash-name" data-hash-name="sha1">SHA1</a></li>
                         <li v-on:click="click"><a class="hash-name" data-hash-name="md5">MD5</a></li>
+                        <li v-on:click="click"><a class="hash-name" data-hash-name="crc32">CRC32</a></li>
                         <li v-on:click="click"><a class="hash-name" data-hash-name="ripemd160">RIPEMD-160</a></li>
                     </ul>
                 </aside>
@@ -55,6 +58,7 @@
         integrity="sha256-ui3vFTgbIIvd9ePh+wF+ju05O3jympV4FyFlpNMV2cw=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/js-sha3@0.8.0/build/sha3.min.js"
         integrity="sha256-8MpIdXZrWpb1JXVJccjsXDKzvX927WNtletZ0/Ny3oQ=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-crc@0.2.0/build/crc.min.js" integrity="sha256-NQIhfUJHyhUEVmPl97vqQKtoEPOY3Hvs/glAWAK7/TI=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js"
         integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 <script>
@@ -81,6 +85,7 @@
                     case "sha224":
                         hash = CryptoJS.SHA224(this.input).toString();
                         break;
+
                     //sha3
                     case "sha3-256":
                         hash = sha3_256(this.input);
@@ -89,16 +94,21 @@
                         hash = sha3_512(this.input);
                         break;
                     case "sha3-384":
-                        hash = sha3_384(this.input).toString();
+                        hash = sha3_384(this.input);
                         break;
                     case "sha3-224":
-                        hash = sha3_224(this.input).toString();
+                        hash = sha3_224(this.input);
                         break;
+
+                    //others
                     case "sha1":
                         hash = CryptoJS.SHA1(this.input).toString();
                         break;
                     case "md5":
                         hash = CryptoJS.MD5(this.input).toString();
+                        break;
+                    case "crc32":
+                        hash = crc32(this.input);
                         break;
                     case "ripemd160":
                         hash = CryptoJS.RIPEMD160(this.input).toString();
