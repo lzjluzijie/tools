@@ -12,13 +12,16 @@ import (
 func main() {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 
+	if len(os.Args) == 1 {
+		generate()
+		return
+	}
+
 	if os.Args[1] == "dev" {
 		for {
 			generate()
 			time.Sleep(time.Second)
 		}
-	} else {
-		generate()
 	}
 }
 
