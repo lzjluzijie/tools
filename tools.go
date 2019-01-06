@@ -6,11 +6,23 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"time"
 )
 
 func main() {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 
+	if os.Args[1] == "dev" {
+		for {
+			generate()
+			time.Sleep(time.Second)
+		}
+	} else {
+		generate()
+	}
+}
+
+func generate() {
 	err := os.Mkdir("gh-pages", 0777)
 	if err != nil && !os.IsExist(err) {
 		panic(err)
