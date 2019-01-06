@@ -32,12 +32,17 @@
                 </aside>
             </div>
             <div class="column is-10" id="hash">
-        <textarea class="textarea" name="input" id="input" v-model="input"
-                  placeholder="input here">{{ input }}</textarea>
+                <div class="content">
+                    <p>
+                        Input below, click to copy the hash.
+                    </p>
+                </div>
+                <textarea class="textarea" name="input" id="input" v-model="input"
+                          placeholder="input here">{{ input }}</textarea>
                 <br>
                 <div class="content" id="output">
                     <p>
-                        (click to copy) {{ HashName }} result: {{ output }}
+                        {{ HashName }} result: {{ output }}
                     </p>
                 </div>
             </div>
@@ -83,10 +88,10 @@
                     case "sha3-512":
                         hash = sha3_512(this.input);
                         break;
-                    case "sha3-sha384":
+                    case "sha3-384":
                         hash = sha3_384(this.input).toString();
                         break;
-                    case "sha3-sha224":
+                    case "sha3-224":
                         hash = sha3_224(this.input).toString();
                         break;
                     case "sha1":
