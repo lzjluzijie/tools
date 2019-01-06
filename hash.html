@@ -39,25 +39,48 @@
     </div>
 </nav>
 <section class="section" id="main">
-    <div class="container tabs">
-        <ul>
-            <li class="is-active" v-on:click="click"><a data-hash-name="sha256">SHA256</a></li>
-            <li v-on:click="click"><a data-hash-name="sha512">SHA512</a></li>
-            <li v-on:click="click"><a data-hash-name="sha3-256">SHA3-256</a></li>
-            <li v-on:click="click"><a data-hash-name="sha3-512">SHA3-512</a></li>
-            <li v-on:click="click"><a data-hash-name="sha1">SHA1</a></li>
-            <li v-on:click="click"><a data-hash-name="md5">MD5</a></li>
-            <li v-on:click="click"><a data-hash-name="ripemd160">RIPEMD-160</a></li>
-        </ul>
-    </div>
-    <div class="container" id="hash">
+    <div class="container">
+        <div class="columns">
+            <div class="column is-2">
+                <aside class="menu">
+                    <p class="menu-label">
+                        SHA2
+                    </p>
+                    <ul class="menu-list">
+                        <li v-on:click="click"><a class="hash-name is-active" data-hash-name="sha256">SHA256</a></li>
+                        <li v-on:click="click"><a class="hash-name" data-hash-name="sha512">SHA512</a></li>
+                        <li v-on:click="click"><a class="hash-name" data-hash-name="sha384">SHA384</a></li>
+                        <li v-on:click="click"><a class="hash-name" data-hash-name="sha224">SHA224</a></li>
+                    </ul>
+                    <p class="menu-label">
+                        SHA3
+                    </p>
+                    <ul class="menu-list">
+                        <li v-on:click="click"><a class="hash-name" data-hash-name="sha3-256">SHA3-256</a></li>
+                        <li v-on:click="click"><a class="hash-name" data-hash-name="sha3-512">SHA3-512</a></li>
+                        <li v-on:click="click"><a class="hash-name" data-hash-name="sha3-384">SHA3-384</a></li>
+                        <li v-on:click="click"><a class="hash-name" data-hash-name="sha3-224">SHA3-224</a></li>
+                    </ul>
+                    <p class="menu-label">
+                        Others
+                    </p>
+                    <ul class="menu-list">
+                        <li v-on:click="click"><a class="hash-name" data-hash-name="sha1">SHA1</a></li>
+                        <li v-on:click="click"><a class="hash-name" data-hash-name="md5">MD5</a></li>
+                        <li v-on:click="click"><a class="hash-name" data-hash-name="ripemd160">RIPEMD-160</a></li>
+                    </ul>
+                </aside>
+            </div>
+            <div class="column is-10" id="hash">
         <textarea class="textarea" name="input" id="input" v-model="input"
                   placeholder="input here">{{ input }}</textarea>
-        <br>
-        <div class="content" id="output">
-            <p>
-                (click to copy) {{ HashName }} result: {{ output }}
-            </p>
+                <br>
+                <div class="content" id="output">
+                    <p>
+                        (click to copy) {{ HashName }} result: {{ output }}
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -80,18 +103,31 @@
             output: function () {
                 let hash = "error";
                 switch (this.HashName) {
+                    //sha2
                     case "sha256":
                         hash = CryptoJS.SHA256(this.input).toString();
                         break;
                     case "sha512":
                         hash = CryptoJS.SHA512(this.input).toString();
                         break;
+                    case "sha384":
+                        hash = CryptoJS.SHA384(this.input).toString();
+                        break;
+                    case "sha224":
+                        hash = CryptoJS.SHA224(this.input).toString();
+                        break;
+                    //sha3
                     case "sha3-256":
-                        // hash =
                         hash = sha3_256(this.input);
                         break;
                     case "sha3-512":
                         hash = sha3_512(this.input);
+                        break;
+                    case "sha3-sha384":
+                        hash = sha3_384(this.input).toString();
+                        break;
+                    case "sha3-sha224":
+                        hash = sha3_224(this.input).toString();
                         break;
                     case "sha1":
                         hash = CryptoJS.SHA1(this.input).toString();
@@ -109,10 +145,11 @@
         },
         methods: {
             click: function (event) {
-                for (let i = 0; i < event.target.parentElement.parentElement.children.length; i++) {
-                    event.target.parentElement.parentElement.children[i].classList.remove("is-active")
+                var s = document.getElementsByClassName("hash-name");
+                for (let i = 0; i < s.length; i++) {
+                    s[i].classList.remove("is-active")
                 }
-                event.target.parentElement.classList.add("is-active");
+                event.target.classList.add("is-active");
                 this.HashName = event.target.getAttribute("data-hash-name");
             }
         }
