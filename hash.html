@@ -95,15 +95,25 @@
                 </aside>
             </div>
             <div class="column is-10" id="hash">
-                <div class="field" id="input-div">
-                    <div class="content">
+                <div class="field columns">
+                    <div class="content column">
                         <p>
                             Input below, click to copy the hash.
                         </p>
                     </div>
+                    <div class="column has-text-right">
+
+                        <input id="switch" type="checkbox" name="switch" class="switch is-rtl" v-model="isFile">
+                        <label for="switch">File</label>
+                    </div>
+                </div>
+                <div class="field" id="file" style="display: none">
+                    <input type="file" @change="hashFile">
+                </div>
+                <div class="field" id="textarea">
                     <div class="control">
-                <textarea class="textarea" name="input" id="input" v-model="input"
-                          placeholder="input here"></textarea>
+                        <textarea class="textarea" name="input" id="input" v-model="input"
+                                  placeholder="input here"></textarea>
                     </div>
                 </div>
                 <div class="field has-addons" id="bits-div" style="display: none">
@@ -195,8 +205,10 @@
         el: '#main',
         data: {
             input: '',
-            bits: 256,
+            output: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
+            bits: 0,
             HashName: 'sha256',
+            isFile: false,
         },
         computed: {
             output: function () {
@@ -224,11 +236,44 @@
                     document.getElementById("bits-div").style.setProperty("display", "none")
                 }
                 this.HashName = hashName;
+            },
+            hashFile: function (event) {
+                if (event.target.files.length === 0) {
+                    console.log("no file");
+                    return
+                }
+
+                let name = this.HashName;
+                let bits = this.bits;
+
+                var reader = new FileReader();
+                reader.onload = function (event) {
+                    main.output = getHash(name, event.target.result, bits);
+                };
+                reader.readAsBinaryString(event.target.files[0]);
+            }
+        },
+        watch: {
+            isFile: function () {
+                if (this.isFile) {
+                    document.getElementById("file").style.removeProperty("display");
+                    document.getElementById("textarea").style.setProperty("display", "none");
+                } else {
+                    document.getElementById("textarea").style.removeProperty("display");
+                    document.getElementById("file").style.setProperty("display", "none");
+                }
             }
         }
     });
 
     new ClipboardJS(document.getElementById('output'));
+
+    var link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = "https://cdn.jsdelivr.net/npm/bulma-switch@2.0.0/dist/css/bulma-switch.min.css";
+    link.integrity = "sha256-jCV/cXwP13w0GNHLgFx6SFgTNAvJPvS5MIhuE30Ng08=";
+    link.crossOrigin = "anonymous";
+    document.getElementsByTagName("head")[0].append(link)
 </script>
 </body>
 </html>
