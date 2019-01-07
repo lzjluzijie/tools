@@ -101,14 +101,6 @@
                             Input below, click to copy the hash.
                         </p>
                     </div>
-                    <div class="column has-text-right">
-
-                        <input id="switch" type="checkbox" name="switch" class="switch is-rtl" v-model="isFile">
-                        <label for="switch">File</label>
-                    </div>
-                </div>
-                <div class="field" id="file" style="display: none">
-                    <input type="file" @change="hashFile">
                 </div>
                 <div class="field" id="textarea">
                     <div class="control">
@@ -127,7 +119,7 @@
                     </div>
                 </div>
                 <div class="content">
-                    <p id="output" style="word-wrap:break-word">
+                    <p id="output" v-bind:data-clipboard-text="output" style="word-wrap:break-word">
                         {{ HashName }} result: {{ output }}
                     </p>
                 </div>
@@ -207,19 +199,10 @@
             input: '',
             bits: 0,
             HashName: 'sha256',
-            isFile: false,
         },
         computed: {
-            output: {
-                get:function () {
-                    let hash = getHash(this.HashName, this.input, this.bits);
-                    document.getElementById("output").setAttribute("data-clipboard-text", hash);
-                    return hash
-                },
-                set:function (v) {
-                    console.log(v);
-                    return v
-                }
+            output: function () {
+                return getHash(this.HashName, this.input, this.bits)
             }
         },
         methods: {
@@ -246,34 +229,6 @@
                     main.output = "wait for file..."
                 } else {
                     this.HashName = hashName;
-                }
-            },
-            hashFile: function (event) {
-                main.output = "hashing...";
-
-                if (event.target.files.length === 0) {
-                    console.log("no file");
-                    return
-                }
-
-                let name = this.HashName;
-                let bits = this.bits;
-
-                var reader = new FileReader();
-                reader.onload = function (event) {
-                    main.output = getHash(name, event.target.result, bits);
-                };
-                reader.readAsBinaryString(event.target.files[0]);
-            }
-        },
-        watch: {
-            isFile: function () {
-                if (this.isFile) {
-                    document.getElementById("file").style.removeProperty("display");
-                    document.getElementById("textarea").style.setProperty("display", "none");
-                } else {
-                    document.getElementById("textarea").style.removeProperty("display");
-                    document.getElementById("file").style.setProperty("display", "none");
                 }
             }
         }
