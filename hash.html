@@ -136,6 +136,61 @@
 <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js"
         integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 <script>
+    function getHash(name, input, bits) {
+        let hash = "error!";
+        switch (name) {
+            //sha2
+            case "sha256":
+                hash = CryptoJS.SHA256(input).toString();
+                break;
+            case "sha512":
+                hash = CryptoJS.SHA512(input).toString();
+                break;
+            case "sha384":
+                hash = CryptoJS.SHA384(input).toString();
+                break;
+            case "sha224":
+                hash = CryptoJS.SHA224(input).toString();
+                break;
+
+            //sha3
+            case "sha3-256":
+                hash = sha3_256(input);
+                break;
+            case "sha3-512":
+                hash = sha3_512(input);
+                break;
+            case "sha3-384":
+                hash = sha3_384(input);
+                break;
+            case "sha3-224":
+                hash = sha3_224(input);
+                break;
+            case "shake128":
+                hash = shake128(input, bits);
+                break;
+            case "shake256":
+                hash = shake256(input, bits);
+                break;
+
+            //others
+            case "sha1":
+                hash = CryptoJS.SHA1(input).toString();
+                break;
+            case "md5":
+                hash = CryptoJS.MD5(input).toString();
+                break;
+            case "crc32":
+                hash = crc32(input);
+                break;
+            case "ripemd160":
+                hash = CryptoJS.RIPEMD160(input).toString();
+                break;
+        }
+
+        return hash
+    }
+
     var main = new Vue({
         el: '#main',
         data: {
@@ -145,56 +200,7 @@
         },
         computed: {
             output: function () {
-                let hash = "error";
-                switch (this.HashName) {
-                    //sha2
-                    case "sha256":
-                        hash = CryptoJS.SHA256(this.input).toString();
-                        break;
-                    case "sha512":
-                        hash = CryptoJS.SHA512(this.input).toString();
-                        break;
-                    case "sha384":
-                        hash = CryptoJS.SHA384(this.input).toString();
-                        break;
-                    case "sha224":
-                        hash = CryptoJS.SHA224(this.input).toString();
-                        break;
-
-                    //sha3
-                    case "sha3-256":
-                        hash = sha3_256(this.input);
-                        break;
-                    case "sha3-512":
-                        hash = sha3_512(this.input);
-                        break;
-                    case "sha3-384":
-                        hash = sha3_384(this.input);
-                        break;
-                    case "sha3-224":
-                        hash = sha3_224(this.input);
-                        break;
-                    case "shake128":
-                        hash = shake128(this.input, this.bits);
-                        break;
-                    case "shake256":
-                        hash = shake256(this.input, this.bits);
-                        break;
-
-                    //others
-                    case "sha1":
-                        hash = CryptoJS.SHA1(this.input).toString();
-                        break;
-                    case "md5":
-                        hash = CryptoJS.MD5(this.input).toString();
-                        break;
-                    case "crc32":
-                        hash = crc32(this.input);
-                        break;
-                    case "ripemd160":
-                        hash = CryptoJS.RIPEMD160(this.input).toString();
-                        break;
-                }
+                let hash = getHash(this.HashName, this.input, this.bits);
                 document.getElementById("output").setAttribute("data-clipboard-text", hash);
                 return hash
             }
@@ -221,6 +227,7 @@
             }
         }
     });
+
     new ClipboardJS(document.getElementById('output'));
 </script>
 </body>
