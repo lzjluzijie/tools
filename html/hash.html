@@ -178,8 +178,16 @@
                     document.getElementById("bits-div").style.setProperty("display", "none")
                 }
                 this.HashName = hashName;
+
+                if (this.isFile) {
+                    main.output = "wait for file..."
+                } else {
+                    this.HashName = hashName;
+                }
             },
             hashFile: function (event) {
+                main.output = "hashing...";
+
                 if (event.target.files.length === 0) {
                     console.log("no file");
                     return
@@ -200,6 +208,7 @@
                 if (this.isFile) {
                     document.getElementById("file").style.removeProperty("display");
                     document.getElementById("textarea").style.setProperty("display", "none");
+                    main.output = "wait for file...";
                 } else {
                     document.getElementById("textarea").style.removeProperty("display");
                     document.getElementById("file").style.setProperty("display", "none");
