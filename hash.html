@@ -126,8 +126,8 @@
                         <input class="input" type="text" v-model="bits" placeholder="output bits">
                     </div>
                 </div>
-                <div class="content" id="output">
-                    <p style="word-wrap:break-word">
+                <div class="content">
+                    <p id="output" style="word-wrap:break-word">
                         {{ HashName }} result: {{ output }}
                     </p>
                 </div>
@@ -205,16 +205,21 @@
         el: '#main',
         data: {
             input: '',
-            output: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
             bits: 0,
             HashName: 'sha256',
             isFile: false,
         },
         computed: {
-            output: function () {
-                let hash = getHash(this.HashName, this.input, this.bits);
-                document.getElementById("output").setAttribute("data-clipboard-text", hash);
-                return hash
+            output: {
+                get:function () {
+                    let hash = getHash(this.HashName, this.input, this.bits);
+                    document.getElementById("output").setAttribute("data-clipboard-text", hash);
+                    return hash
+                },
+                set:function (v) {
+                    console.log(v);
+                    return v
+                }
             }
         },
         methods: {
@@ -236,8 +241,16 @@
                     document.getElementById("bits-div").style.setProperty("display", "none")
                 }
                 this.HashName = hashName;
+
+                if (this.isFile) {
+                    main.output = "wait for file..."
+                } else {
+                    this.HashName = hashName;
+                }
             },
             hashFile: function (event) {
+                main.output = "hashing...";
+
                 if (event.target.files.length === 0) {
                     console.log("no file");
                     return
