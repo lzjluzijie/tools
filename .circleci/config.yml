@@ -7,10 +7,8 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - "f7:46:71:c8:76:15:14:fd:08:05:de:0d:8d:68:6a:3a"
-
+            - "cb:80:d9:b2:c8:cc:df:89:b3:e3:dc:55:db:27:89:a9"
       - checkout
-
       - run: go get -v -t -d ./...
       - run: bash deploy.sh
 
