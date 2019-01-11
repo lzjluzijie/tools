@@ -143,11 +143,16 @@
         integrity="sha256-vmT+cGA/37TLJdcbn/L89qtu3RA/LEozREmaqY+pg4E=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/js-sha3@0.8.0/build/sha3.min.js"
         integrity="sha256-8MpIdXZrWpb1JXVJccjsXDKzvX927WNtletZ0/Ny3oQ=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/js-sha1@0.6.0/src/sha1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-sha1@0.6.0/build/sha1.min.js"
+        integrity="sha256-7uoevSMGGHaM9JT1c9+XCpW+ECg1f7KnPL/JNpDjSRI=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/js-md5@0.7.3/build/md5.min.js"
         integrity="sha256-MdVyBgdWRaNPRC46VtXStEXkN8+Zc5iJvB1lZisCvDE=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/js-crc@0.2.0/build/crc.min.js"
         integrity="sha256-NQIhfUJHyhUEVmPl97vqQKtoEPOY3Hvs/glAWAK7/TI=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/gh/brix/crypto-js@release-3.1.2/build/components/core-min.js"
+        integrity="sha256-qOAva3TZS8zEHOtY5AXvhOmw1ZfX46nsmnxF5FjJ1CI=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/gh/brix/crypto-js@release-3.1.2/build/components/ripemd160-min.js"
+        integrity="sha256-hmBLVeui/f19+F+HlSGwNKd1wAcWkw9Zy9FC/rtw8Wo=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js"
         integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 <script>
@@ -199,7 +204,7 @@
                 hash = crc32(input);
                 break;
             case "ripemd160":
-                //todo
+                hash = CryptoJS.RIPEMD160(input).toString();
                 break;
         }
 
