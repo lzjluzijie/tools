@@ -94,8 +94,10 @@
                     </ul>
                 </aside>
             </div>
+
             <div class="column is-5" id="text-div">
                 <h2 class="title is-2">Text</h2>
+
                 <div class="field columns">
                     <div class="content column">
                         <p>
@@ -103,12 +105,14 @@
                         </p>
                     </div>
                 </div>
+
                 <div class="field" id="textarea">
                     <div class="control">
                         <textarea class="textarea" name="input" id="input" v-model="input"
                                   placeholder="input text here"></textarea>
                     </div>
                 </div>
+
                 <div class="field has-addons" id="bits-div" style="display: none">
                     <p class="control">
                         <a class="button">
@@ -119,6 +123,7 @@
                         <input class="input" type="text" v-model="bits" placeholder="output bits">
                     </div>
                 </div>
+
                 <div class="content">
                     <p id="output" v-bind:data-clipboard-text="output" style="word-wrap:break-word">
                         {{ HashName }} result: {{ output }}
@@ -127,9 +132,18 @@
             </div>
             <div class="column is-5" id="file-div">
                 <h2 class="title is-2">File</h2>
+
                 <div id="dropzone" class="title is-3"
-                     style="height: 200px;padding: 75px;border: 2px dashed;border-radius:5px;text-align:center;">
+                     style="position: relative; height: 200px;padding: 75px;border: 2px dashed;border-radius:5px;text-align:center;">
                     Drop files here
+                    <input type="file" @change="fileChange($event)"
+                           style="opacity: 0.0; position: absolute; top: 0; left: 0; bottom: 0; right: 0; width: 100%; height:100%;"/>
+                </div>
+
+                <div>
+                    <ul>
+
+                    </ul>
                 </div>
             </div>
         </div>
@@ -156,61 +170,6 @@
 <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js"
         integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 <script>
-    function getHash(name, input, bits) {
-        let hash = "error!";
-        switch (name) {
-            //sha2
-            case "sha256":
-                hash = sha256(input);
-                break;
-            case "sha512":
-                hash = sha512(input);
-                break;
-            case "sha384":
-                hash = sha384(input);
-                break;
-            case "sha224":
-                hash = sha224(input);
-                break;
-
-            //sha3
-            case "sha3-256":
-                hash = sha3_256(input);
-                break;
-            case "sha3-512":
-                hash = sha3_512(input);
-                break;
-            case "sha3-384":
-                hash = sha3_384(input);
-                break;
-            case "sha3-224":
-                hash = sha3_224(input);
-                break;
-            case "shake128":
-                hash = shake128(input, bits);
-                break;
-            case "shake256":
-                hash = shake256(input, bits);
-                break;
-
-            //others
-            case "sha1":
-                hash = sha1(input);
-                break;
-            case "md5":
-                hash = md5(input);
-                break;
-            case "crc32":
-                hash = crc32(input);
-                break;
-            case "ripemd160":
-                hash = CryptoJS.RIPEMD160(input).toString();
-                break;
-        }
-
-        return hash
-    }
-
     var main = new Vue({
         el: '#main',
         data: {
@@ -220,10 +179,68 @@
         },
         computed: {
             output: function () {
-                return getHash(this.HashName, this.input, this.bits)
+                return this.hash(this.input)
             }
         },
         methods: {
+            hash: function (input) {
+                let name = this.HashName;
+                let bits = this.bits;
+
+                let hash = "error!";
+
+                switch (name) {
+                    //sha2
+                    case "sha256":
+                        hash = sha256(input);
+                        break;
+                    case "sha512":
+                        hash = sha512(input);
+                        break;
+                    case "sha384":
+                        hash = sha384(input);
+                        break;
+                    case "sha224":
+                        hash = sha224(input);
+                        break;
+
+                    //sha3
+                    case "sha3-256":
+                        hash = sha3_256(input);
+                        break;
+                    case "sha3-512":
+                        hash = sha3_512(input);
+                        break;
+                    case "sha3-384":
+                        hash = sha3_384(input);
+                        break;
+                    case "sha3-224":
+                        hash = sha3_224(input);
+                        break;
+                    case "shake128":
+                        hash = shake128(input, bits);
+                        break;
+                    case "shake256":
+                        hash = shake256(input, bits);
+                        break;
+
+                    //others
+                    case "sha1":
+                        hash = sha1(input);
+                        break;
+                    case "md5":
+                        hash = md5(input);
+                        break;
+                    case "crc32":
+                        hash = crc32(input);
+                        break;
+                    case "ripemd160":
+                        hash = CryptoJS.RIPEMD160(input).toString();
+                        break;
+                }
+
+                return hash
+            },
             click: function (event) {
                 let s = document.getElementsByClassName("hash-name");
                 for (let i = 0; i < s.length; i++) {
@@ -242,6 +259,16 @@
                     document.getElementById("bits-div").style.setProperty("display", "none")
                 }
                 this.HashName = hashName;
+            },
+            fileChange: function (event) {
+                this.fileHash(event.target.files[0])
+            },
+            fileHash: function (file) {
+                var reader = new FileReader();
+                reader.addEventListener("loadend", function (e) {
+                    console.log(main.hash(e.target.result))
+                });
+                reader.readAsArrayBuffer(file);
             }
         }
     });
@@ -259,11 +286,7 @@
         event.stopPropagation();
         event.preventDefault();
 
-        var reader = new FileReader();
-        reader.addEventListener("loadend", function () {
-            console.log(getHash(main.HashName, this.result, main.bits))
-        });
-        reader.readAsArrayBuffer(event.dataTransfer.files[0]);
+        main.fileHash(event.dataTransfer.files[0])
     });
 </script>
 </body>
