@@ -68,7 +68,7 @@
 
                 <div class="content">
                     <p id="output" v-bind:data-clipboard-text="output" style="word-wrap:break-word">
-                        {{ HashName }} result: {{ output }}
+                        {{ hashName }} result: {{ output }}
                     </p>
                 </div>
             </div>
@@ -82,11 +82,11 @@
                            style="opacity: 0.0; position: absolute; top: 0; left: 0; bottom: 0; right: 0; width: 100%; height:100%;"/>
                 </div>
 
-                <div>
-                    <ul>
-
-                    </ul>
-                </div>
+                <ul id="fileHashes">
+                    <li v-for="fileHash in fileHashes" style="word-wrap:break-word">
+                        {{ fileHash.hashName }} {{ fileHash.fileName }} : {{ fileHash.hash }}
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
@@ -117,7 +117,8 @@
         data: {
             input: '',
             bits: 0,
-            HashName: 'sha256',
+            hashName: 'sha256',
+            fileHashes: []
         },
         computed: {
             output: function () {
@@ -126,7 +127,7 @@
         },
         methods: {
             hash: function (input) {
-                let name = this.HashName;
+                let name = this.hashName;
                 let bits = this.bits;
 
                 let hash = "error!";
@@ -200,7 +201,7 @@
                 } else {
                     document.getElementById("bits-div").style.setProperty("display", "none")
                 }
-                this.HashName = hashName;
+                this.hashName = hashName;
             },
             fileChange: function (event) {
                 this.fileHash(event.target.files[0])
@@ -208,10 +209,16 @@
             fileHash: function (file) {
                 var reader = new FileReader();
                 reader.addEventListener("loadend", function (e) {
-                    console.log(main.hash(e.target.result))
+                    main.fileHashes.push({
+                        "fileName": file.name,
+                        "hashName": main.hashName,
+                        "hash": main.hash(e.target.result)
+                    });
+
+                    console.log(main.fileHashes)
                 });
                 reader.readAsArrayBuffer(file);
-            }
+            },
         }
     });
 
