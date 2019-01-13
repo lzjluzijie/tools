@@ -3,6 +3,7 @@ package main
 import (
 	"io/ioutil"
 	"log"
+	"net/http"
 	"os"
 	"path/filepath"
 	"strings"
@@ -18,6 +19,13 @@ func main() {
 	}
 
 	if os.Args[1] == "dev" {
+		go func() {
+			err := http.ListenAndServe(":80", http.FileServer(http.Dir("gh-pages")))
+			if err != nil {
+				panic(err)
+			}
+		}()
+
 		for {
 			generate()
 			time.Sleep(time.Second)
@@ -39,7 +47,7 @@ func generate() {
 	}
 
 	for _, path := range paths {
-		if strings.HasSuffix(path, "base.html") {
+		if strings.HasSuffix(path, "base.html") || !strings.HasSuffix(path, ".html") {
 			continue
 		}
 		log.Println(path)
