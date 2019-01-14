@@ -125,8 +125,9 @@
                 </div>
 
                 <div class="content">
-                    <p id="output" v-bind:data-clipboard-text="output" style="word-wrap:break-word">
-                        {{ hashName }} result: {{ output }}
+                    <p id="output" class="content" v-bind:data-clipboard-text="output" style="word-wrap:break-word">
+                        {{ hashName }}:
+                        {{ output }}
                     </p>
                 </div>
             </div>
@@ -141,11 +142,14 @@
                            multiple/>
                 </div>
 
-                <ul id="fileHashes">
-                    <li v-for="fileHash in fileHashes" style="word-wrap:break-word">
-                        {{ fileHash.hashName }} {{ fileHash.fileName }} : {{ fileHash.hash }}
-                    </li>
-                </ul>
+                <div id="fileHashes">
+                    <ul v-for="fileHash in fileHashes" style="word-wrap:break-word">
+                        <li class="content hash-result" v-bind:data-clipboard-text="fileHash.hash">
+                            {{ fileHash.hashName }} {{ fileHash.fileName }}:
+                            {{ fileHash.hash }}
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
@@ -285,6 +289,7 @@
     });
 
     new ClipboardJS(document.getElementById('output'));
+    new ClipboardJS('.hash-result');
 
     //file
     document.getElementById("dropzone").addEventListener("dragover", function f(event) {
