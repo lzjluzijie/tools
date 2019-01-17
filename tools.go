@@ -20,7 +20,7 @@ func main() {
 
 	if os.Args[1] == "dev" {
 		go func() {
-			err := http.ListenAndServe(":80", http.FileServer(http.Dir("gh-pages")))
+			err := http.ListenAndServe("127.0.0.1:80", http.FileServer(http.Dir("gh-pages")))
 			if err != nil {
 				panic(err)
 			}

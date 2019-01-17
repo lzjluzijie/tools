@@ -1,0 +1,71 @@
+<section class="section" id="main">
+    <div class="container">
+        <h2 class="title is-2">Encode</h2>
+
+        <div class="columns">
+            <div class="column is-2">
+                <aside class="menu">
+                    <ul class="menu-list">
+                        <li v-on:click="click"><a class="encode-name is-active" data-encode-name="base58">base58</a>
+                        </li>
+                        <li v-on:click="click"><a class="encode-name" data-encode-name="base36">base36</a></li>
+                    </ul>
+                </aside>
+            </div>
+
+            <div class="column is-5">
+                <textarea class="textarea" v-model="input"></textarea>
+            </div>
+
+            <div class="column is-5">
+                <textarea class="textarea" readonly>{{ output }}</textarea>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.min.js"
+        integrity="sha256-ui3vFTgbIIvd9ePh+wF+ju05O3jympV4FyFlpNMV2cw=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-base@0.2.1/dist/simple-base.js"
+        integrity="sha256-1D948U/obQtmywjjYk3OJpA2k+cvWhf/B07kkfqefPE=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js"
+        integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script>
+    var main = new Vue({
+        el: '#main',
+        data: {
+            input: '',
+            encodeName: 'base58',
+        },
+        computed: {
+            output: function () {
+                let input = this.input;
+                let encodeName = this.encodeName;
+                let output = "error!";
+                switch (encodeName) {
+                    case "base58":
+                        output = SimpleBase.encode(input, 58);
+                        break;
+                    case "base36":
+                        output = SimpleBase.encode(input, 36);
+                        break;
+                }
+
+                return output
+            },
+        },
+        methods: {
+            click: function (event) {
+                let s = document.getElementsByClassName("encode-name");
+                for (let i = 0; i < s.length; i++) {
+                    s[i].classList.remove("is-active")
+                }
+                event.target.classList.add("is-active");
+
+                let encodeName = event.target.getAttribute("data-encode-name");
+                this.encodeName = encodeName;
+            }
+        },
+    });
+
+    new ClipboardJS("#textarea");
+</script>
