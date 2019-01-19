@@ -6,15 +6,16 @@
             <div class="column is-2">
                 <aside class="menu">
                     <ul class="menu-list">
-                        <li v-on:click="click"><a class="encode-name is-active" data-encode-name="base58">base58</a>
+                        <li v-on:click="click"><a class="encode-name is-active" data-encode-name="base64">base64</a>
                         </li>
+                        <li v-on:click="click"><a class="encode-name" data-encode-name="base58">base58</a></li>
                         <li v-on:click="click"><a class="encode-name" data-encode-name="base36">base36</a></li>
                     </ul>
                 </aside>
             </div>
 
             <div class="column is-5">
-                <textarea class="textarea" v-model="input"></textarea>
+                <textarea class="textarea" id="input" v-model="input"></textarea>
             </div>
 
             <div class="column is-5">
@@ -34,7 +35,7 @@
         el: '#main',
         data: {
             input: '',
-            encodeName: 'base58',
+            encodeName: 'base64',
         },
         computed: {
             output: function () {
@@ -42,6 +43,9 @@
                 let encodeName = this.encodeName;
                 let output = "error!";
                 switch (encodeName) {
+                    case "base64":
+                        output = window.btoa(input);
+                        break;
                     case "base58":
                         output = SimpleBase.encode(input, 58);
                         break;
