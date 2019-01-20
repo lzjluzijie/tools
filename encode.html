@@ -73,11 +73,11 @@
             </div>
 
             <div class="column is-5">
-                <textarea class="textarea" id="input" v-model="input"></textarea>
+                <textarea class="textarea" id="input" data-clipboard-target="#input" v-model="input"></textarea>
             </div>
 
             <div class="column is-5">
-                <textarea class="textarea" readonly>{{ output }}</textarea>
+                <textarea class="textarea" id="output" data-clipboard-target="#output" readonly>{{ output }}</textarea>
             </div>
         </div>
     </div>
@@ -129,7 +129,7 @@
         },
     });
 
-    new ClipboardJS("#textarea");
+    new ClipboardJS("#output");
 </script>
 </body>
 </html>
