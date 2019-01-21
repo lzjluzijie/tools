@@ -68,6 +68,7 @@
                         </li>
                         <li v-on:click="click"><a class="encode-name" data-encode-name="base58">base58</a></li>
                         <li v-on:click="click"><a class="encode-name" data-encode-name="base36">base36</a></li>
+                        <li v-on:click="click"><a class="encode-name" data-encode-name="hex">hex</a></li>
                     </ul>
                 </aside>
             </div>
@@ -89,6 +90,15 @@
 <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js"
         integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 <script>
+    function hex(input) {
+        var arr = [];
+        for (var n = 0, l = input.length; n < l; n++) {
+            var h = Number(input.charCodeAt(n)).toString(16);
+            arr.push(h);
+        }
+        return arr.join('');
+    }
+
     var main = new Vue({
         el: '#main',
         data: {
@@ -109,6 +119,9 @@
                         break;
                     case "base36":
                         output = SimpleBase.encode(input, 36);
+                        break;
+                    case "hex":
+                        output = hex(input);
                         break;
                 }
 
