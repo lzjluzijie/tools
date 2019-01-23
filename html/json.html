@@ -1,0 +1,43 @@
+<section class="section" id="main">
+    <div class="container">
+        <h2 class="title is-2">JSON</h2>
+
+        <div class="columns">
+            <div class="column">
+                <textarea class="textarea" id="input" data-clipboard-target="#input" v-model="input"></textarea>
+            </div>
+
+            <div class="column">
+                <textarea class="textarea" id="output" data-clipboard-target="#output" readonly>{{ output }}</textarea>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.min.js"
+        integrity="sha256-ui3vFTgbIIvd9ePh+wF+ju05O3jympV4FyFlpNMV2cw=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js"
+        integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script>
+    var main = new Vue({
+        el: '#main',
+        data: {
+            input: '',
+        },
+        computed: {
+            output: function () {
+                let input = this.input;
+                let j = {};
+                try {
+                    j = JSON.parse(input);
+                } catch (e) {
+                    console.log(e);
+                    return "error"
+                } finally {
+                    return JSON.stringify(j, null, 4)
+                }
+            },
+        }
+    });
+
+    new ClipboardJS("#output");
+</script>
