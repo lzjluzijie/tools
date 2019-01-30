@@ -146,13 +146,6 @@
                 event.target.classList.add("is-active");
 
                 let encodeName = event.target.getAttribute("data-encode-name");
-
-                document.getElementById("base64-select").style.setProperty("display", "none");
-                switch (encodeName) {
-                    case "base64":
-                        document.getElementById("base64-select").style.removeProperty("display");
-                        break;
-                }
                 this.encodeName = encodeName;
             }
         },
