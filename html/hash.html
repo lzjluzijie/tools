@@ -1,4 +1,4 @@
-<section class="section" id="main">
+<section class="section" id="hash">
     <div class="container">
         <div class="columns">
             <div class="column is-2">
@@ -96,8 +96,8 @@
         </div>
     </div>
 </section>
-<script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.min.js"
-        integrity="sha256-ui3vFTgbIIvd9ePh+wF+ju05O3jympV4FyFlpNMV2cw=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.8/dist/vue.min.js"
+        integrity="sha256-GN7NvWruk083BKn+djXpMOuWnd9Rz70hQgF868IIyTU=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/js-sha256@0.9.0/build/sha256.min.js"
         integrity="sha256-cVdRFpfbdE04SloqhkavI/PJBWCr+TuyQP3WkLKaiYo=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/js-sha512@0.8.0/build/sha512.min.js"
@@ -117,8 +117,8 @@
 <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js"
         integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 <script>
-    var main = new Vue({
-        el: '#main',
+    var hash = new Vue({
+        el: '#hash',
         data: {
             input: '',
             bits: 0,
@@ -213,16 +213,16 @@
             fileChange: function (event) {
                 let files = event.target.files;
                 for (var i = 0; i < files.length; i++) {
-                    main.fileHash(files[i])
+                    hash.fileHash(files[i])
                 }
             },
             fileHash: function (file) {
                 var reader = new FileReader();
                 reader.addEventListener("loadend", function (e) {
-                    main.fileHashes.push({
+                    hash.fileHashes.push({
                         "fileName": file.name,
-                        "hashName": main.hashName,
-                        "hash": main.hash(e.target.result)
+                        "hashName": hash.hashName,
+                        "hash": hash.hash(e.target.result)
                     });
                 });
                 reader.readAsArrayBuffer(file);
@@ -246,7 +246,7 @@
 
         let files = event.dataTransfer.files;
         for (var i = 0; i < files.length; i++) {
-            main.fileHash(files[i])
+            hash.fileHash(files[i])
         }
     });
 </script>
