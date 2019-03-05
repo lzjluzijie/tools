@@ -35,11 +35,11 @@
             </div>
 
             <div class="column is-5">
-                <textarea class="textarea" id="raw" data-clipboard-target="#raw" v-model="raw"></textarea>
+                <textarea class="textarea" id="raw" v-model="raw"></textarea>
             </div>
 
             <div class="column is-5">
-                <textarea class="textarea" id="enc" data-clipboard-target="#enc" v-model="enc"
+                <textarea class="textarea" id="enc" v-model="enc"
                           readonly></textarea>
             </div>
         </div>
@@ -49,8 +49,6 @@
         integrity="sha256-GN7NvWruk083BKn+djXpMOuWnd9Rz70hQgF868IIyTU=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/simple-base@0.2.1/dist/simple-base.js"
         integrity="sha256-1D948U/obQtmywjjYk3OJpA2k+cvWhf/B07kkfqefPE=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js"
-        integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 <script>
     function hexEncode(raw) {
         var arr = [];
@@ -160,7 +158,4 @@
             }
         },
     });
-
-    new ClipboardJS("#raw");
-    new ClipboardJS("#enc");
 </script>
