@@ -22,3 +22,11 @@ https://tools.halu.lu/hash.html
 - MD5
 - CRC32
 - RIPEMD-160
+
+## Encode
+
+- Base64
+- Base64 URL
+- Base58
+- Base36
+- hex
