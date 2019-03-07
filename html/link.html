@@ -1,0 +1,44 @@
+<section class="section" id="link">
+    <div class="container">
+        <div class="control">
+            <input class="input" type="text" v-model="input" placeholder="Sharing URL here">
+        </div>
+
+        <br>
+
+        <div class="content control">
+            <p id="output" class="content" v-bind:data-clipboard-text="output" style="word-wrap:break-word">
+                Direct URL: {{ output }}
+            </p>
+        </div>
+    </div>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.8/dist/vue.min.js"
+        integrity="sha256-GN7NvWruk083BKn+djXpMOuWnd9Rz70hQgF868IIyTU=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js"
+        integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script>
+    var link = new Vue({
+        el: '#link',
+        data: {
+            input: '',
+        },
+        computed: {
+            output: function () {
+                try {
+                    let url = new URL(this.input);
+                    let host = url.host;
+                    if (host.slice(-14) === "sharepoint.com") {
+                        url.searchParams.set("download", "1");
+                        return url.toString()
+                    }
+                    return "unknown url"
+                } catch (e) {
+                    return ""
+                }
+            }
+        },
+    });
+
+    new ClipboardJS(document.getElementById('output'));
+</script>
