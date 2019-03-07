@@ -26,13 +26,17 @@
         computed: {
             output: function () {
                 try {
-                    let url = new URL(this.input);
+                    let input = this.input;
+                    let url = new URL(input);
                     let host = url.host;
                     if (host.slice(-14) === "sharepoint.com") {
                         url.searchParams.set("download", "1");
                         return url.toString()
+                    } else if (host.slice(-7) === "1drv.ms" || host.slice(-17) === "onedrive.live.com") {
+                        return "https://api.onedrive.com/v1.0/shares/u!" + window.btoa(input).replace(/\+/g, '-').replace(/\//g, '_').replace(/\=+$/, '') + "/root/content"
+                    } else {
+                        return "unknown url"
                     }
-                    return "unknown url"
                 } catch (e) {
                     return ""
                 }
