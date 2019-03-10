@@ -91,6 +91,7 @@
                         <li v-on:click="click"><a class="encode-name" data-encode-name="base64url">Base64 URL</a></li>
                         <li v-on:click="click"><a class="encode-name" data-encode-name="base58">Base58</a></li>
                         <li v-on:click="click"><a class="encode-name" data-encode-name="base36">Base36</a></li>
+                        <li v-on:click="click"><a class="encode-name" data-encode-name="urlencode">URL Encoding</a></li>
                         <li v-on:click="click"><a class="encode-name" data-encode-name="hex">hex</a></li>
                     </ul>
                 </aside>
@@ -157,6 +158,9 @@
                         case "base36":
                             enc = SimpleBase.encode(raw, 36);
                             break;
+                        case "urlencode":
+                            enc = encodeURIComponent(raw);
+                            break;
                         case "hex":
                             enc = hexEncode(raw);
                             break;
@@ -180,6 +184,9 @@
                             break;
                         case "base36":
                             raw = SimpleBase.decode(enc, 36);
+                            break;
+                        case "urlencode":
+                            raw = decodeURIComponent(enc);
                             break;
                         case "hex":
                             raw = hexDecode(enc);
