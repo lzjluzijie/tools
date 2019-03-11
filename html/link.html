@@ -1,5 +1,10 @@
 <section class="section" id="link">
     <div class="container">
+
+        <div class="content">
+            Get direct download link from sharing link, support onedrive, sharepoint， and google drive.
+        </div>
+
         <div class="control">
             <input class="input" type="text" v-model="input" placeholder="Sharing URL here">
         </div>
@@ -32,8 +37,15 @@
                     if (host.slice(-14) === "sharepoint.com") {
                         url.searchParams.set("download", "1");
                         return url.toString()
-                    } else if (host.slice(-7) === "1drv.ms" || host.slice(-17) === "onedrive.live.com") {
+                    } else if (host === "1drv.ms" || host === "onedrive.live.com") {
                         return "https://api.onedrive.com/v1.0/shares/u!" + window.btoa(input).replace(/\+/g, '-').replace(/\//g, '_').replace(/\=+$/, '') + "/root/content"
+                    } else if (host === "drive.google.com") {
+                        let id = url.searchParams.get("id");
+                        if (id === null) {
+                            return "google drive error"
+                        } else {
+                            return "https://drive.google.com/uc?export=download&id=" + id
+                        }
                     } else {
                         return "unknown url"
                     }
