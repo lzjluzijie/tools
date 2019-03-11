@@ -49,21 +49,35 @@
                     let input = this.input;
                     let url = new URL(input);
                     let host = url.host;
+
+                    //SharePoint
                     if (host.slice(-14) === "sharepoint.com") {
                         url.searchParams.set("download", "1");
                         return url.toString()
-                    } else if (host === "1drv.ms" || host === "onedrive.live.com") {
+                    }
+
+                    //OneDrive
+                    if (host === "1drv.ms" || host === "onedrive.live.com") {
                         return "https://api.onedrive.com/v1.0/shares/u!" + window.btoa(input).replace(/\+/g, '-').replace(/\//g, '_').replace(/\=+$/, '') + "/root/content"
-                    } else if (host === "drive.google.com") {
+                    }
+
+                    //Google Drive
+                    if (host === "drive.google.com") {
                         let id = url.searchParams.get("id");
-                        if (id === null) {
-                            return "google drive error, check the example"
-                        } else {
+                        if (id != null) {
+                            alert(id);
                             return "https://drive.google.com/uc?export=download&id=" + id
                         }
-                    } else {
-                        return "unknown url"
+
+                        if (input.slice(0, 32) === "https://drive.google.com/file/d/") {
+                            return "https://drive.google.com/uc?export=download&id=" + input.slice(32).split("/")[0]
+                        }
+
+                        return "google drive error, check the example"
                     }
+
+                    //error
+                    return "unknown url"
                 } catch (e) {
                     return ""
                 }
