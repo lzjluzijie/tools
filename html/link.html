@@ -1,28 +1,43 @@
 <section class="section" id="link">
     <div class="container">
+        <div class="columns">
 
-        <div class="content">
-            Get direct download link from sharing link, support onedrive, sharepoint， and google drive.
+            <div class="column is-5">
+                <div id="examples" class="content" style="word-wrap: break-word;">
+
+                </div>
+            </div>
+
+            <div class="column is-5">
+                <div class="control">
+                    <input class="input" type="text" v-model="input" placeholder="Sharing URL here">
+                </div>
+
+                <br>
+
+                <div class="content control">
+                    <p id="output" class="content" v-bind:data-clipboard-text="output" style="word-wrap:break-word">
+                        Direct URL: {{ output }}
+                    </p>
+                </div>
+            </div>
+
         </div>
 
-        <div class="control">
-            <input class="input" type="text" v-model="input" placeholder="Sharing URL here">
-        </div>
-
-        <br>
-
-        <div class="content control">
-            <p id="output" class="content" v-bind:data-clipboard-text="output" style="word-wrap:break-word">
-                Direct URL: {{ output }}
-            </p>
-        </div>
     </div>
 </section>
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.8/dist/vue.min.js"
         integrity="sha256-GN7NvWruk083BKn+djXpMOuWnd9Rz70hQgF868IIyTU=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js"
         integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked@0.6.0/marked.min.js"
+        integrity="sha256-ypJ65b+4BwdfsQtz1URdUBhJ9L5ijdovxTOdG+x5hsE=" crossorigin="anonymous"></script>
 <script>
+
+    var md = "R2V0IGRpcmVjdCBkb3dubG9hZCBsaW5rIGZyb20gc2hhcmluZyBsaW5rLCBjdXJyZW50bHkgc3VwcG9ydCBPbmVEcml2ZSwgU2hhcmVQb2ludCwgYW5kIEdvb2dsZSBEcml2ZS4KCnwgTmFtZSAgICAgICAgIHwgU2hhcmluZyBVUkwgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHwgRGlyZWN0IFVSTCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHwKfCAtLS0tLS0tLS0tLS0gfCAtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0gfCAtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0gfAp8IE9uZURyaXZlICAgICB8IGh0dHBzOi8vMWRydi5tcy91L3MhQWdsbU56NXB6UnQxbWc2YTdjcS1HaGktMGgyRCAgICAgICAgICAgICB8IGh0dHBzOi8vYXBpLm9uZWRyaXZlLmNvbS92MS4wL3NoYXJlcy91IWFIUjBjSE02THk4eFpISjJMbTF6TDNVdmN5RkJaMnh0VG5vMWNIcFNkREZ0WnpaaE4yTnhMVWRvYVMwd2FESkUvcm9vdC9jb250ZW50IHwKfCBTaGFyZVBvaW50ICAgfCBodHRwczovL2x6amx1emlqaWUtbXkuc2hhcmVwb2ludC5jb20vOmk6L2cvcGVyc29uYWwvNnR1X2x6amx1emlqaWVfb25taWNyb3NvZnRfY29tL0ViYy1PVURmVWVORWhrTzZEaDU1OVU0QmtDc2dZeDU3eVRqWldKNTBMSmwxc2c/ZT0wRGt6NUogfCBodHRwczovL2x6amx1emlqaWUtbXkuc2hhcmVwb2ludC5jb20vOmk6L2cvcGVyc29uYWwvNnR1X2x6amx1emlqaWVfb25taWNyb3NvZnRfY29tL0ViYy1PVURmVWVORWhrTzZEaDU1OVU0QmtDc2dZeDU3eVRqWldKNTBMSmwxc2c/ZT0wRGt6NUomZG93bmxvYWQ9MSB8CnwgR29vZ2xlIERyaXZlIHwgaHR0cHM6Ly9kcml2ZS5nb29nbGUuY29tL29wZW4/aWQ9MVFYVzdGRGpsYjN1THNrVWtaeGFZSnU1NVVRSTdTaEwwIHwgaHR0cHM6Ly9kcml2ZS5nb29nbGUuY29tL3VjP2V4cG9ydD1kb3dubG9hZCZpZD0xUVhXN0ZEamxiM3VMc2tVa1p4YVlKdTU1VVFJN1NoTDAgfAoK";
+    document.getElementById("examples").innerHTML = marked(window.atob(md));
+    document.getElementsByTagName("table")[0].style.setProperty("table-layout", "fixed");
+
     var link = new Vue({
         el: '#link',
         data: {
