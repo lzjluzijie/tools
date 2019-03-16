@@ -51,7 +51,7 @@
                     let host = url.host;
 
                     //SharePoint
-                    if (host.slice(-14) === "sharepoint.com") {
+                    if (host.slice(-14) === "sharepoint.com" || host.slice(-13) === "sharepoint.cn") {
                         url.searchParams.set("download", "1");
                         return url.toString()
                     }
