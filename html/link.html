@@ -105,11 +105,12 @@
         },
         created: function () {
             this.debouncedGetWeiboShortURL = _.debounce(this.getWeiboShortURL, 500)
+            this.debouncedGetBaiduShortURL = _.debounce(this.getBaiduShortURL, 500)
         },
         watch: {
             longURL: function () {
                 this.shortURL = "requesting...";
-                this.debouncedGetWeiboShortURL()
+                this.debouncedGetBaiduShortURL()
             }
         },
         methods: {
@@ -125,6 +126,26 @@
                     }).then(function (response) {
                         console.log(response);
                         link.shortURL = response.urls[0].url_short
+                    }).catch(function (error) {
+                        link.shortURL = error
+                    })
+                } catch (e) {
+                    this.shortURL = "invalid url"
+                }
+            },
+            getBaiduShortURL: function () {
+                try {
+                    let longURL = this.longURL;
+                    let url = new URL(longURL);
+                    axios.post('https://dwz.cn/admin/v2/create', {
+                        url: longURL,
+                    }, {
+                        headers: {
+                            Token: '3b5ad7e2cf3334ec0122d39aea8a970c',
+                        }
+                    }).then(function (response) {
+                        console.log(response);
+                        link.shortURL = response.data.ShortUrl
                     }).catch(function (error) {
                         link.shortURL = error
                     })
