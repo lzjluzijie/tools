@@ -18,11 +18,8 @@
                     <a class="navbar-item" id="navbar-halulu" href="https://halu.lu/"
                        target="_blank">Halulu</a>
 
-                    <div class="navbar-item" id="navbar-github">
-                        <a href="https://github.com/lzjluzijie/tools">
-                            <font-awesome-icon :icon="['fab', 'github']" size="2x"/>
-                        </a>
-                    </div>
+                    <a class="navbar-item" id="navbar-github" href="https://github.com/lzjluzijie/tools"
+                       target="_blank">Github</a>
                 </div>
             </div>
         </nav>
