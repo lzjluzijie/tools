@@ -68,7 +68,7 @@
             </div>
 
             <div class="content">
-                <p id="output" class="content" v-bind:data-clipboard-text="output"
+                <p id="output" ref="output" class="content" v-bind:data-clipboard-text="output"
                    style="word-wrap:break-word">
                     {{ hashName }}:
                     {{ output }}
@@ -99,7 +99,7 @@
 </template>
 
 <script>
-    // import ClipboardJS from 'clipboard';
+    import ClipboardJS from 'clipboard';
     import {sha256, sha224} from 'js-sha256';
     import {sha512, sha384} from 'js-sha512';
     import {sha3_256, sha3_512, sha3_384, sha3_224, shake128, shake256} from 'js-sha3';
@@ -117,6 +117,27 @@
                 hashName: 'sha256',
                 fileHashes: []
             }
+        },
+        mounted: function () {
+            new ClipboardJS(this.$refs.output);
+            // new ClipboardJS('.hash-result');
+
+            //file
+            // document.getElementById("dropzone").addEventListener("dragover", function f(event) {
+            //     event.stopPropagation();
+            //     event.preventDefault();
+            //     event.dataTransfer.dropEffect = "copy";
+            // });
+            //
+            // document.getElementById("dropzone").addEventListener("drop", function (event) {
+            //     event.stopPropagation();
+            //     event.preventDefault();
+            //
+            //     let files = event.dataTransfer.files;
+            //     for (var i = 0; i < files.length; i++) {
+            //         hash.fileHash(files[i])
+            //     }
+            // });
         },
         computed: {
             output: function () {
@@ -223,26 +244,6 @@
             },
         }
     }
-
-    // new ClipboardJS(document.getElementById('output'));
-    // new ClipboardJS('.hash-result');
-
-    //file
-    // document.getElementById("dropzone").addEventListener("dragover", function f(event) {
-    //     event.stopPropagation();
-    //     event.preventDefault();
-    //     event.dataTransfer.dropEffect = "copy";
-    // });
-    //
-    // document.getElementById("dropzone").addEventListener("drop", function (event) {
-    //     event.stopPropagation();
-    //     event.preventDefault();
-    //
-    //     let files = event.dataTransfer.files;
-    //     for (var i = 0; i < files.length; i++) {
-    //         hash.fileHash(files[i])
-    //     }
-    // });
 </script>
 
 <style scoped>
