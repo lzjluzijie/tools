@@ -1,5 +1,5 @@
 <template>
-    <div class="columns">
+    <div id="hash" class="columns">
         <div class="column is-2">
             <aside class="menu">
                 <p class="menu-label">

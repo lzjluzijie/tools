@@ -17,6 +17,7 @@
     "js-sha3": "^0.8.0",
     "js-sha512": "^0.8.0",
     "sass-loader": "^7.1.0",
+    "simple-base": "^1.0.0",
     "vue": "^2.6.6"
   },
   "devDependencies": {
