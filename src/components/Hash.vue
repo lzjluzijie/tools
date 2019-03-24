@@ -106,6 +106,7 @@
     import {sha1} from 'js-sha1';
     import {md5} from 'js-md5';
     import {crc32} from 'js-crc';
+    import ripemd160 from 'crypto-js/ripemd160'
 
     export default {
         name: "Hash",
@@ -174,9 +175,9 @@
                     case "crc32":
                         hash = crc32(input);
                         break;
-                    // case "ripemd160":
-                    //     hash = CryptoJS.RIPEMD160(input).toString();
-                    //     break;
+                    case "ripemd160":
+                        hash = ripemd160(input).toString();
+                        break;
                 }
 
                 return hash
