@@ -11,17 +11,10 @@
                 <div class="navbar-start">
                     <router-link id="navbar-hash" class="navbar-item" to="/hash">Hash</router-link>
                     <router-link id="navbar-encode" class="navbar-item" to="/encode">Encode</router-link>
-
-                    <a class="navbar-item" id="navbar-link" href="/link.html">
-                        Link
-                    </a>
+                    <router-link id="navbar-link" class="navbar-item" to="/link">Link</router-link>
                 </div>
 
                 <div class="navbar-end">
-                    <a class="navbar-item" id="navbar-todo" href="/todo.html">
-                        TODO
-                    </a>
-
                     <a class="navbar-item" id="navbar-halulu" href="https://halu.lu/"
                        target="_blank">Halulu</a>
 
