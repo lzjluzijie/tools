@@ -1,5 +1,5 @@
 <template>
-    <div class="columns">
+    <div id="Link" class="columns">
         <div class="column is-6">
             <div class="control">
                 <input class="input" type="text" v-model="sharingURL" placeholder="Sharing URL here">
@@ -40,8 +40,20 @@
     import _ from 'lodash'
     import marked from 'marked'
 
+    // import LinkMD from '../../link.md'
+    import md from '!raw-loader!../../link.md'
+
     export default {
         name: "Link",
+        created: function () {
+            this.debouncedGetWeiboShortURL = _.debounce(this.getWeiboShortURL, 500);
+            this.debouncedGetBaiduShortURL = _.debounce(this.getBaiduShortURL, 500);
+        },
+        mounted: function () {
+            // const md = window.atob("R2V0IGRpcmVjdCBkb3dubG9hZCBsaW5rIGZyb20gc2hhcmluZyBsaW5rLCBjdXJyZW50bHkgc3VwcG9ydCBPbmVEcml2ZSwgU2hhcmVQb2ludCwgYW5kIEdvb2dsZSBEcml2ZS4KCkhlcmUgYXJlIHNvbWUgZXhhbXBsZXMuCgp8IE5hbWUgICAgICAgICB8IFNoYXJpbmcgVVJMICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB8IERpcmVjdCBVUkwgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB8CnwgLS0tLS0tLS0tLS0tIHwgLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tIHwgLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tIHwKfCBPbmVEcml2ZSAgICAgfCBodHRwczovLzFkcnYubXMvdS9zIUFnbG1OejVwelJ0MW1nNmE3Y3EtR2hpLTBoMkQgICAgICAgICAgICAgfCBodHRwczovL2FwaS5vbmVkcml2ZS5jb20vdjEuMC9zaGFyZXMvdSFhSFIwY0hNNkx5OHhaSEoyTG0xekwzVXZjeUZCWjJ4dFRubzFjSHBTZERGdFp6WmhOMk54TFVkb2FTMHdhREpFL3Jvb3QvY29udGVudCB8CnwgU2hhcmVQb2ludCAgIHwgaHR0cHM6Ly9sempsdXppamllLW15LnNoYXJlcG9pbnQuY29tLzppOi9nL3BlcnNvbmFsLzZ0dV9sempsdXppamllX29ubWljcm9zb2Z0X2NvbS9FYmMtT1VEZlVlTkVoa082RGg1NTlVNEJrQ3NnWXg1N3lUalpXSjUwTEpsMXNnP2U9MERrejVKIHwgaHR0cHM6Ly9sempsdXppamllLW15LnNoYXJlcG9pbnQuY29tLzppOi9nL3BlcnNvbmFsLzZ0dV9sempsdXppamllX29ubWljcm9zb2Z0X2NvbS9FYmMtT1VEZlVlTkVoa082RGg1NTlVNEJrQ3NnWXg1N3lUalpXSjUwTEpsMXNnP2U9MERrejVKJmRvd25sb2FkPTEgfAp8IEdvb2dsZSBEcml2ZSB8IGh0dHBzOi8vZHJpdmUuZ29vZ2xlLmNvbS9vcGVuP2lkPTFRWFc3RkRqbGIzdUxza1VrWnhhWUp1NTVVUUk3U2hMMCB8IGh0dHBzOi8vZHJpdmUuZ29vZ2xlLmNvbS91Yz9leHBvcnQ9ZG93bmxvYWQmaWQ9MVFYVzdGRGpsYjN1THNrVWtaeGFZSnU1NVVRSTdTaEwwIHwK")
+            this.$refs.examples.innerHTML = marked(md);
+            this.$refs.examples.getElementsByTagName("table")[0].style.setProperty("table-layout", "fixed");
+        },
         data() {
             return {
                 sharingURL: '',
@@ -88,15 +100,6 @@
                     return "invalid url"
                 }
             }
-        },
-        created: function () {
-            this.debouncedGetWeiboShortURL = _.debounce(this.getWeiboShortURL, 500);
-            this.debouncedGetBaiduShortURL = _.debounce(this.getBaiduShortURL, 500);
-        },
-        mounted: function () {
-            const md = "R2V0IGRpcmVjdCBkb3dubG9hZCBsaW5rIGZyb20gc2hhcmluZyBsaW5rLCBjdXJyZW50bHkgc3VwcG9ydCBPbmVEcml2ZSwgU2hhcmVQb2ludCwgYW5kIEdvb2dsZSBEcml2ZS4KCkhlcmUgYXJlIHNvbWUgZXhhbXBsZXMuCgp8IE5hbWUgICAgICAgICB8IFNoYXJpbmcgVVJMICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB8IERpcmVjdCBVUkwgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB8CnwgLS0tLS0tLS0tLS0tIHwgLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tIHwgLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tIHwKfCBPbmVEcml2ZSAgICAgfCBodHRwczovLzFkcnYubXMvdS9zIUFnbG1OejVwelJ0MW1nNmE3Y3EtR2hpLTBoMkQgICAgICAgICAgICAgfCBodHRwczovL2FwaS5vbmVkcml2ZS5jb20vdjEuMC9zaGFyZXMvdSFhSFIwY0hNNkx5OHhaSEoyTG0xekwzVXZjeUZCWjJ4dFRubzFjSHBTZERGdFp6WmhOMk54TFVkb2FTMHdhREpFL3Jvb3QvY29udGVudCB8CnwgU2hhcmVQb2ludCAgIHwgaHR0cHM6Ly9sempsdXppamllLW15LnNoYXJlcG9pbnQuY29tLzppOi9nL3BlcnNvbmFsLzZ0dV9sempsdXppamllX29ubWljcm9zb2Z0X2NvbS9FYmMtT1VEZlVlTkVoa082RGg1NTlVNEJrQ3NnWXg1N3lUalpXSjUwTEpsMXNnP2U9MERrejVKIHwgaHR0cHM6Ly9sempsdXppamllLW15LnNoYXJlcG9pbnQuY29tLzppOi9nL3BlcnNvbmFsLzZ0dV9sempsdXppamllX29ubWljcm9zb2Z0X2NvbS9FYmMtT1VEZlVlTkVoa082RGg1NTlVNEJrQ3NnWXg1N3lUalpXSjUwTEpsMXNnP2U9MERrejVKJmRvd25sb2FkPTEgfAp8IEdvb2dsZSBEcml2ZSB8IGh0dHBzOi8vZHJpdmUuZ29vZ2xlLmNvbS9vcGVuP2lkPTFRWFc3RkRqbGIzdUxza1VrWnhhWUp1NTVVUUk3U2hMMCB8IGh0dHBzOi8vZHJpdmUuZ29vZ2xlLmNvbS91Yz9leHBvcnQ9ZG93bmxvYWQmaWQ9MVFYVzdGRGpsYjN1THNrVWtaeGFZSnU1NVVRSTdTaEwwIHwK"
-            this.$refs.examples.innerHTML = marked(window.atob(md));
-            this.$refs.examples.getElementsByTagName("table")[0].style.setProperty("table-layout", "fixed");
         },
         watch: {
             longURL: function () {

@@ -2,9 +2,9 @@
     <div id="app">
         <nav class="navbar" role="navigation" aria-label="main navigation">
             <div class="navbar-brand">
-                <a class="navbar-item" href="/">
+                <router-link id="navbar-home" class="navbar-item" to="/home">
                     <img alt="halulu" src="https://halu.lu/favicon-32x32.png"><strong>Tools</strong>
-                </a>
+                </router-link>
             </div>
 
             <div id="navbar-menu" class="navbar-menu">
