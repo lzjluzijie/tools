@@ -4,9 +4,9 @@ git config --global user.email circleci@halu.lu
 git config --global user.name halulu-circleci
 git clone git@github.com:lzjluzijie/tools.git -b gh-pages gh-pages
 
-go run tools.go
-cp todo.md gh-pages
-cp README.md gh-pages
+sudo npm install
+npm run build
+cp dist/* gh-pages -r
 
 cd gh-pages
 git add .
