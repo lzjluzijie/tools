@@ -71,7 +71,7 @@
                             enc = window.btoa(raw);
                             break;
                         case "base64url":
-                            enc = window.btoa(raw).replace(/\+/g, '-').replace(/\//g, '_').replace(/\=+$/, '');
+                            enc = window.btoa(raw).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
                             break;
                         case "base58":
                             enc = SimpleBase.encode(raw, 58);
@@ -98,7 +98,7 @@
                             raw = window.atob(enc);
                             break;
                         case "base64url":
-                            raw = window.atob(enc.replace(/\+/g, '-').replace(/\//g, '_').replace(/\=+$/, ''));
+                            raw = window.atob(enc.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''));
                             break;
                         case "base58":
                             raw = SimpleBase.decode(enc, 58);
@@ -147,7 +147,7 @@
                     document.getElementById("enc").setAttribute("readonly", "readonly")
                 }
             },
-            hexEncode: function(raw) {
+            hexEncode: function (raw) {
                 var arr = [];
                 for (var n = 0, l = raw.length; n < l; n++) {
                     var h = Number(raw.charCodeAt(n)).toString(16);
@@ -155,7 +155,7 @@
                 }
                 return arr.join('');
             },
-            hexDecode: function(enc) {
+            hexDecode: function (enc) {
                 var hex = enc.toString();
                 var raw = '';
                 for (var n = 0; n < hex.length; n += 2) {

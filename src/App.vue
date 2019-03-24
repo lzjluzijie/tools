@@ -9,13 +9,8 @@
 
             <div id="navbar-menu" class="navbar-menu">
                 <div class="navbar-start">
-                    <a class="navbar-item" id="navbar-hash" href="/hash.html">
-                        Hash
-                    </a>
-
-                    <a class="navbar-item" id="navbar-encode" href="/encode.html">
-                        Encode
-                    </a>
+                    <router-link id="navbar-hash" class="navbar-item" to="/hash">Hash</router-link>
+                    <router-link id="navbar-encode" class="navbar-item" to="/encode">Encode</router-link>
 
                     <a class="navbar-item" id="navbar-link" href="/link.html">
                         Link
@@ -40,20 +35,15 @@
         </nav>
         <section>
             <div class="container">
-                <Hash></Hash>
+                <router-view></router-view>
             </div>
         </section>
     </div>
 </template>
 
 <script>
-    import Hash from './components/Hash.vue'
-
     export default {
         name: 'app',
-        components: {
-            Hash
-        }
     }
 </script>
 
