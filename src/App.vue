@@ -97,8 +97,12 @@
 
 <script>
     // import ClipboardJS from 'clipboard';
-    import {sha256, sha512, sha384, sha224} from 'js-sha256';
-    import {sha3_256, sha3_512} from 'js-sha3';
+    import {sha256, sha224} from 'js-sha256';
+    import {sha512, sha384} from 'js-sha512';
+    import {sha3_256, sha3_512, sha3_384, sha3_224, shake128, shake256} from 'js-sha3';
+    import {sha1} from 'js-sha1';
+    import {md5} from 'js-md5';
+    import {crc32} from 'js-crc';
 
     export default {
         name: 'app',
@@ -118,7 +122,7 @@
         methods: {
             hash: function (input) {
                 let name = this.hashName;
-                // let bits = this.bits;
+                let bits = this.bits;
 
                 let hash = "error!";
 
@@ -144,29 +148,29 @@
                     case "sha3-512":
                         hash = sha3_512(input);
                         break;
-                    // case "sha3-384":
-                    //     hash = sha3_384(input);
-                    //     break;
-                    // case "sha3-224":
-                    //     hash = sha3_224(input);
-                    //     break;
-                    // case "shake128":
-                    //     hash = shake128(input, bits);
-                    //     break;
-                    // case "shake256":
-                    //     hash = shake256(input, bits);
-                    //     break;
-                    //
-                    // //others
-                    // case "sha1":
-                    //     hash = sha1(input);
-                    //     break;
-                    // case "md5":
-                    //     hash = md5(input);
-                    //     break;
-                    // case "crc32":
-                    //     hash = crc32(input);
-                    //     break;
+                    case "sha3-384":
+                        hash = sha3_384(input);
+                        break;
+                    case "sha3-224":
+                        hash = sha3_224(input);
+                        break;
+                    case "shake128":
+                        hash = shake128(input, bits);
+                        break;
+                    case "shake256":
+                        hash = shake256(input, bits);
+                        break;
+
+                    //others
+                    case "sha1":
+                        hash = sha1(input);
+                        break;
+                    case "md5":
+                        hash = md5(input);
+                        break;
+                    case "crc32":
+                        hash = crc32(input);
+                        break;
                     // case "ripemd160":
                     //     hash = CryptoJS.RIPEMD160(input).toString();
                     //     break;
