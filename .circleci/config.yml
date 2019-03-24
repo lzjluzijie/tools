@@ -2,14 +2,13 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/golang:1.11.4
-    working_directory: /go/src/github.com/lzjluzijie/tools
+      - image: circleci/node:10.15.3
+    working_directory: ~/tools
     steps:
       - add_ssh_keys:
           fingerprints:
             - "cb:80:d9:b2:c8:cc:df:89:b3:e3:dc:55:db:27:89:a9"
       - checkout
-      - run: go get -v -t -d ./...
       - run: bash deploy.sh
 
 workflows:
