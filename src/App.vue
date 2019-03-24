@@ -1,97 +1,146 @@
 <template>
-    <div id="app" class="columns">
-        <div class="column is-2">
-            <aside class="menu">
-                <p class="menu-label">
-                    SHA2
-                </p>
-                <ul class="menu-list">
-                    <li v-on:click="click"><a class="hash-name is-active" data-hash-name="sha256">SHA256</a></li>
-                    <li v-on:click="click"><a class="hash-name" data-hash-name="sha512">SHA512</a></li>
-                    <li v-on:click="click"><a class="hash-name" data-hash-name="sha384">SHA384</a></li>
-                    <li v-on:click="click"><a class="hash-name" data-hash-name="sha224">SHA224</a></li>
-                </ul>
-
-                <p class="menu-label">
-                    SHA3
-                </p>
-                <ul class="menu-list">
-                    <li v-on:click="click"><a class="hash-name" data-hash-name="sha3-256">SHA3-256</a></li>
-                    <li v-on:click="click"><a class="hash-name" data-hash-name="sha3-512">SHA3-512</a></li>
-                    <li v-on:click="click"><a class="hash-name" data-hash-name="sha3-384">SHA3-384</a></li>
-                    <li v-on:click="click"><a class="hash-name" data-hash-name="sha3-224">SHA3-224</a></li>
-                    <li v-on:click="click"><a class="hash-name" data-hash-name="shake128">Shake128</a></li>
-                    <li v-on:click="click"><a class="hash-name" data-hash-name="shake256">Shake256</a></li>
-                </ul>
-
-                <p class="menu-label">
-                    Others
-                </p>
-                <ul class="menu-list">
-                    <li v-on:click="click"><a class="hash-name" data-hash-name="sha1">SHA1</a></li>
-                    <li v-on:click="click"><a class="hash-name" data-hash-name="md5">MD5</a></li>
-                    <li v-on:click="click"><a class="hash-name" data-hash-name="crc32">CRC32</a></li>
-                    <li v-on:click="click"><a class="hash-name" data-hash-name="ripemd160">RIPEMD-160</a></li>
-                </ul>
-            </aside>
-        </div>
-
-        <div class="column is-5" id="text-div">
-            <h2 class="title is-2">Text</h2>
-
-            <div class="field columns">
-                <div class="content column">
-                    <p>
-                        Input below, click to copy the hash.
-                    </p>
-                </div>
+    <div id="app">
+        <nav class="navbar" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="/">
+                    <img alt="halulu" src="https://halu.lu/favicon-32x32.png"><strong>Tools</strong>
+                </a>
             </div>
 
-            <div class="field" id="textarea">
-                <div class="control">
+            <div id="navbar-menu" class="navbar-menu">
+                <div class="navbar-start">
+                    <a class="navbar-item" id="navbar-hash" href="/hash.html">
+                        Hash
+                    </a>
+
+                    <a class="navbar-item" id="navbar-encode" href="/encode.html">
+                        Encode
+                    </a>
+
+                    <a class="navbar-item" id="navbar-link" href="/link.html">
+                        Link
+                    </a>
+                </div>
+
+                <div class="navbar-end">
+                    <a class="navbar-item" id="navbar-todo" href="/todo.html">
+                        TODO
+                    </a>
+
+                    <a class="navbar-item" id="navbar-halulu" href="https://halu.lu/"
+                       target="_blank">Halulu</a>
+
+                    <div class="navbar-item" id="navbar-github">
+                        <a href="https://github.com/lzjluzijie/tools">
+                            <i class="fab fa-github fa-2x"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <section>
+            <div class="container">
+
+
+                <div class="columns">
+                    <div class="column is-2">
+                        <aside class="menu">
+                            <p class="menu-label">
+                                SHA2
+                            </p>
+                            <ul class="menu-list">
+                                <li v-on:click="click"><a class="hash-name is-active" data-hash-name="sha256">SHA256</a>
+                                </li>
+                                <li v-on:click="click"><a class="hash-name" data-hash-name="sha512">SHA512</a></li>
+                                <li v-on:click="click"><a class="hash-name" data-hash-name="sha384">SHA384</a></li>
+                                <li v-on:click="click"><a class="hash-name" data-hash-name="sha224">SHA224</a></li>
+                            </ul>
+
+                            <p class="menu-label">
+                                SHA3
+                            </p>
+                            <ul class="menu-list">
+                                <li v-on:click="click"><a class="hash-name" data-hash-name="sha3-256">SHA3-256</a></li>
+                                <li v-on:click="click"><a class="hash-name" data-hash-name="sha3-512">SHA3-512</a></li>
+                                <li v-on:click="click"><a class="hash-name" data-hash-name="sha3-384">SHA3-384</a></li>
+                                <li v-on:click="click"><a class="hash-name" data-hash-name="sha3-224">SHA3-224</a></li>
+                                <li v-on:click="click"><a class="hash-name" data-hash-name="shake128">Shake128</a></li>
+                                <li v-on:click="click"><a class="hash-name" data-hash-name="shake256">Shake256</a></li>
+                            </ul>
+
+                            <p class="menu-label">
+                                Others
+                            </p>
+                            <ul class="menu-list">
+                                <li v-on:click="click"><a class="hash-name" data-hash-name="sha1">SHA1</a></li>
+                                <li v-on:click="click"><a class="hash-name" data-hash-name="md5">MD5</a></li>
+                                <li v-on:click="click"><a class="hash-name" data-hash-name="crc32">CRC32</a></li>
+                                <li v-on:click="click"><a class="hash-name" data-hash-name="ripemd160">RIPEMD-160</a>
+                                </li>
+                            </ul>
+                        </aside>
+                    </div>
+
+                    <div class="column is-5" id="text-div">
+                        <h2 class="title is-2">Text</h2>
+
+                        <div class="field columns">
+                            <div class="content column">
+                                <p>
+                                    Input below, click to copy the hash.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="field" id="textarea">
+                            <div class="control">
                         <textarea class="textarea" name="input" id="input" v-model="input"
                                   placeholder="input text here"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="field has-addons" id="bits-div" style="display: none">
+                            <p class="control">
+                                <a class="button">
+                                    Output bits
+                                </a>
+                            </p>
+                            <div class="control">
+                                <input class="input" type="text" v-model="bits" placeholder="output bits">
+                            </div>
+                        </div>
+
+                        <div class="content">
+                            <p id="output" class="content" v-bind:data-clipboard-text="output"
+                               style="word-wrap:break-word">
+                                {{ hashName }}:
+                                {{ output }}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="column is-5" id="file-div">
+                        <h2 class="title is-2">File</h2>
+
+                        <div id="dropzone" class="title is-3"
+                             style="position: relative; height: 200px;padding: 75px;border: 2px dashed;border-radius:5px;text-align:center;">
+                            Drop files here
+                            <input id="files" type="file" @change="fileChange($event)"
+                                   style="opacity: 0.0; position: absolute; top: 0; left: 0; bottom: 0; right: 0; width: 100%; height:100%;"
+                                   multiple/>
+                        </div>
+
+                        <div id="fileHashes">
+                            <!--<ul v-for="fileHash in fileHashes" style="word-wrap:break-word">-->
+                            <!--<li class="content hash-result" v-bind:data-clipboard-text="fileHash.hash">-->
+                            <!--{{ fileHash.hashName }} {{ fileHash.fileName }}:-->
+                            <!--{{ fileHash.hash }}-->
+                            <!--</li>-->
+                            <!--</ul>-->
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <div class="field has-addons" id="bits-div" style="display: none">
-                <p class="control">
-                    <a class="button">
-                        Output bits
-                    </a>
-                </p>
-                <div class="control">
-                    <input class="input" type="text" v-model="bits" placeholder="output bits">
-                </div>
-            </div>
-
-            <div class="content">
-                <p id="output" class="content" v-bind:data-clipboard-text="output" style="word-wrap:break-word">
-                    {{ hashName }}:
-                    {{ output }}
-                </p>
-            </div>
-        </div>
-        <div class="column is-5" id="file-div">
-            <h2 class="title is-2">File</h2>
-
-            <div id="dropzone" class="title is-3"
-                 style="position: relative; height: 200px;padding: 75px;border: 2px dashed;border-radius:5px;text-align:center;">
-                Drop files here
-                <input id="files" type="file" @change="fileChange($event)"
-                       style="opacity: 0.0; position: absolute; top: 0; left: 0; bottom: 0; right: 0; width: 100%; height:100%;"
-                       multiple/>
-            </div>
-
-            <div id="fileHashes">
-                <!--<ul v-for="fileHash in fileHashes" style="word-wrap:break-word">-->
-                <!--<li class="content hash-result" v-bind:data-clipboard-text="fileHash.hash">-->
-                <!--{{ fileHash.hashName }} {{ fileHash.fileName }}:-->
-                <!--{{ fileHash.hash }}-->
-                <!--</li>-->
-                <!--</ul>-->
-            </div>
-        </div>
+        </section>
     </div>
 </template>
 
