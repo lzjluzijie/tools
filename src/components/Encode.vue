@@ -7,15 +7,11 @@
 
             <div class="column is-10" style="text-align: center">
                 <div id="encode-arrow" v-on:click="change(true)">
-                    <h2 class="subtitle is-2" style="display: inline">raw</h2>
-                    <i class="fas fa-arrow-right fa-3x"></i>
-                    <h2 class="subtitle is-2" style="display: inline">enc</h2>
+                    <h2 class="subtitle is-2" style="display: inline">raw→enc</h2>
                 </div>
 
                 <div id="decode-arrow" v-on:click="change(false)" style="display: none">
-                    <h2 class="subtitle is-2" style="display: inline">raw</h2>
-                    <i class="fas fa-arrow-left fa-3x"></i>
-                    <h2 class="subtitle is-2" style="display: inline">enc</h2>
+                    <h2 class="subtitle is-2" style="display: inline">raw←enc</h2>
                 </div>
             </div>
         </div>

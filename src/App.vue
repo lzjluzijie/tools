@@ -20,7 +20,7 @@
 
                     <div class="navbar-item" id="navbar-github">
                         <a href="https://github.com/lzjluzijie/tools">
-                            <i class="fab fa-github fa-2x"></i>
+                            <font-awesome-icon :icon="['fab', 'github']" size="2x"/>
                         </a>
                     </div>
                 </div>
