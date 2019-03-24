@@ -6,8 +6,6 @@ https://tools.halu.lu/
 
 ## Hash
 
-https://tools.halu.lu/hash.html
-
 - SHA256
 - SHA512
 - SHA384
@@ -29,4 +27,12 @@ https://tools.halu.lu/hash.html
 - Base64 URL
 - Base58
 - Base36
+- URL Encoding
 - hex
+
+## Link
+
+- OneDrive & SharePoint
+- Google Drive
+
+- https://dwz.cn/

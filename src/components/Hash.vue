@@ -87,12 +87,12 @@
             </div>
 
             <div id="fileHashes">
-                <!--<ul v-for="fileHash in fileHashes" style="word-wrap:break-word">-->
-                <!--<li class="content hash-result" v-bind:data-clipboard-text="fileHash.hash">-->
-                <!--{{ fileHash.hashName }} {{ fileHash.fileName }}:-->
-                <!--{{ fileHash.hash }}-->
-                <!--</li>-->
-                <!--</ul>-->
+                <ul style="word-wrap:break-word">
+                <li class="content hash-result" v-for="fileHash in fileHashes" :key="fileHash.id" v-bind:data-clipboard-text="fileHash.hash">
+                {{ fileHash.hashName }} {{ fileHash.fileName }}:
+                {{ fileHash.hash }}
+                </li>
+                </ul>
             </div>
         </div>
     </div>
@@ -120,24 +120,24 @@
         },
         mounted: function () {
             new ClipboardJS(this.$refs.output);
-            // new ClipboardJS('.hash-result');
+            new ClipboardJS('.hash-result');
 
-            //file
-            // document.getElementById("dropzone").addEventListener("dragover", function f(event) {
-            //     event.stopPropagation();
-            //     event.preventDefault();
-            //     event.dataTransfer.dropEffect = "copy";
-            // });
-            //
-            // document.getElementById("dropzone").addEventListener("drop", function (event) {
-            //     event.stopPropagation();
-            //     event.preventDefault();
-            //
-            //     let files = event.dataTransfer.files;
-            //     for (var i = 0; i < files.length; i++) {
-            //         hash.fileHash(files[i])
-            //     }
-            // });
+            // file
+            document.getElementById("dropzone").addEventListener("dragover", event => {
+                event.stopPropagation();
+                event.preventDefault();
+                event.dataTransfer.dropEffect = "copy";
+            });
+
+            document.getElementById("dropzone").addEventListener("drop", event => {
+                event.stopPropagation();
+                event.preventDefault();
+
+                let files = event.dataTransfer.files;
+                for (var i = 0; i < files.length; i++) {
+                    this.fileHash(files[i])
+                }
+            });
         },
         computed: {
             output: function () {
@@ -227,18 +227,17 @@
             fileChange: function (event) {
                 let files = event.target.files;
                 for (var i = 0; i < files.length; i++) {
-                    // hash.fileHash(files[i])
+                    this.fileHash(files[i])
                 }
             },
             fileHash: function (file) {
                 let reader = new FileReader();
-                reader.addEventListener("loadend", function () {
-
-                    // hash.fileHashes.push({
-                    //     "fileName": file.name,
-                    //     "hashName": hash.hashName,
-                    //     "hash": hash.hash(e.target.result)
-                    // });
+                reader.addEventListener("loadend", e => {
+                    this.fileHashes.push({
+                        "fileName": file.name,
+                        "hashName": this.hashName,
+                        "hash": this.hash(e.target.result)
+                    });
                 });
                 reader.readAsArrayBuffer(file);
             },
