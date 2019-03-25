@@ -1,5 +1,5 @@
 <template>
-    <div id="Home">
+    <div id="home">
         <div>
             <div id="content" ref="content" class="content" style="word-wrap: break-word;"></div>
         </div>

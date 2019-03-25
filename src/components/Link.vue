@@ -1,5 +1,5 @@
 <template>
-    <div id="Link" class="columns">
+    <div id="link" class="columns">
         <div class="column is-6">
             <div class="control">
                 <input class="input" type="text" v-model="sharingURL" placeholder="Sharing URL here">
@@ -40,8 +40,7 @@
     import _ from 'lodash'
     import marked from 'marked'
 
-    // import LinkMD from '../../link.md'
-    import md from '!raw-loader!../../link.md'
+    import md from '!raw-loader!../docs/link.md'
 
     export default {
         name: "Link",
