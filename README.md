@@ -27,6 +27,7 @@ https://tools.halu.lu/
 - Base64 URL
 - Base58
 - Base36
+- Base32
 - URL Encoding
 - hex
 

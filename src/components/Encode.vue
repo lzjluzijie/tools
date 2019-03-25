@@ -25,6 +25,7 @@
                         <li v-on:click="click"><a class="encode-name" data-encode-name="base64url">Base64 URL</a></li>
                         <li v-on:click="click"><a class="encode-name" data-encode-name="base58">Base58</a></li>
                         <li v-on:click="click"><a class="encode-name" data-encode-name="base36">Base36</a></li>
+                        <li v-on:click="click"><a class="encode-name" data-encode-name="base32">Base32</a></li>
                         <li v-on:click="click"><a class="encode-name" data-encode-name="urlencode">URL Encoding</a></li>
                         <li v-on:click="click"><a class="encode-name" data-encode-name="hex">hex</a></li>
                     </ul>
@@ -44,7 +45,8 @@
 </template>
 
 <script>
-    import * as SimpleBase from 'simple-base'
+    import SimpleBase from 'simple-base'
+    import base32 from 'hi-base32'
 
     export default {
         name: "Encode",
@@ -75,6 +77,9 @@
                         case "base36":
                             enc = SimpleBase.encode(raw, 36);
                             break;
+                        case "base32":
+                            enc = base32.encode(raw);
+                            break;
                         case "urlencode":
                             enc = encodeURIComponent(raw);
                             break;
@@ -101,6 +106,9 @@
                             break;
                         case "base36":
                             raw = SimpleBase.decode(enc, 36);
+                            break;
+                        case "base32":
+                            raw = base32.decode(enc);
                             break;
                         case "urlencode":
                             raw = decodeURIComponent(enc);
