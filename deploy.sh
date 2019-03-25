@@ -6,9 +6,9 @@ git clone git@github.com:lzjluzijie/tools.git -b gh-pages gh-pages
 
 sudo npm install
 npm run build
-cp dist/* gh-pages -r
+cp gh-pages/.git dist -r
 
-cd gh-pages
+cd dist
 git add .
 git commit -m "Site updated by circleci: `date +"%Y%m%d-%H:%M:%S"` UTC+8"
 git push origin gh-pages
