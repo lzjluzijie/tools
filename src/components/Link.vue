@@ -8,7 +8,7 @@
             <br>
 
             <div class="content control">
-                <p id="directURL" class="content" v-bind:data-clipboard-text="directURL"
+                <p id="directURL" class="content clipboard" v-bind:data-clipboard-text="directURL"
                    style="word-wrap:break-word">
                     Direct URL: {{ directURL }}
                 </p>
@@ -26,7 +26,7 @@
             <br>
 
             <div class="content control">
-                <p id="shortURL" class="content" v-bind:data-clipboard-text="shortURL" style="word-wrap:break-word">
+                <p id="shortURL" class="content clipboard" v-bind:data-clipboard-text="shortURL" style="word-wrap:break-word">
                     Short URL: {{ shortURL }}
                 </p>
             </div>
@@ -36,6 +36,7 @@
 </template>
 
 <script>
+    import ClipboardJS from 'clipboard';
     import axios from 'axios'
     import _ from 'lodash'
     import marked from 'marked'
@@ -51,6 +52,8 @@
         mounted: function () {
             this.$refs.examples.innerHTML = marked(md);
             this.$refs.examples.getElementsByTagName("table")[0].style.setProperty("table-layout", "fixed");
+
+            new ClipboardJS('.clipboard')
         },
         data() {
             return {
