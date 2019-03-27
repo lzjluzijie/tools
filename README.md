@@ -36,5 +36,6 @@ https://tools.halu.lu/
 - OneDrive & SharePoint
 - Google Drive
 
+- https://t.cn/
 - https://dwz.cn/
 
