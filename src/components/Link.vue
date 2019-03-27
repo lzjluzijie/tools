@@ -26,7 +26,8 @@
             <br>
 
             <div class="content control">
-                <p id="shortURL" class="content clipboard" v-bind:data-clipboard-text="shortURL" style="word-wrap:break-word">
+                <p id="shortURL" class="content clipboard" v-bind:data-clipboard-text="shortURL"
+                   style="word-wrap:break-word">
                     Short URL: {{ shortURL }}
                 </p>
             </div>
@@ -90,7 +91,6 @@
                 if (host === "drive.google.com") {
                     let id = url.searchParams.get("id");
                     if (id != null) {
-                        alert(id);
                         return "https://drive.google.com/uc?export=download&id=" + id
                     }
 
@@ -109,6 +109,9 @@
             longURL: function () {
                 this.shortURL = "requesting...";
                 this.debouncedGetWeiboShortURL()
+            },
+            directURL: function () {
+                this.longURL = this.directURL;
             }
         },
         methods: {
