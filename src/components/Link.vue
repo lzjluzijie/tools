@@ -42,6 +42,41 @@
 
     import md from '!raw-loader!../docs/link.md'
 
+    const jsonp = function (url, data) {
+        return new Promise((resolve, reject) => {
+            // 初始化url
+            let dataString = url.indexOf('?') === -1 ? '?' : '&'
+            let callbackName = `jsonpCB_${Date.now()}`
+            url += `${dataString}callback=${callbackName}`
+            if (data) {
+                // 有请求参数，依次添加到url
+                for (let k in data) {
+                    url += `&${k}=${data[k]}`
+                }
+            }
+            let jsNode = document.createElement('script')
+            jsNode.src = url
+            // 触发callback，触发后删除js标签和绑定在window上的callback
+            window[callbackName] = result => {
+                delete window[callbackName]
+                document.body.removeChild(jsNode)
+                if (result) {
+                    resolve(result)
+                } else {
+                    reject('没有返回数据')
+                }
+            }
+            // js加载异常的情况
+            jsNode.addEventListener('error', () => {
+                delete window[callbackName]
+                document.body.removeChild(jsNode)
+                reject('JavaScript资源加载失败')
+            }, false)
+            // 添加js节点到document上时，开始请求
+            document.body.appendChild(jsNode)
+        })
+    }
+
     export default {
         name: "Link",
         created: function () {
@@ -103,7 +138,7 @@
         watch: {
             longURL: function () {
                 this.shortURL = "requesting...";
-                this.debouncedGetBaiduShortURL()
+                this.debouncedGetWeiboShortURL()
             }
         },
         methods: {
@@ -111,14 +146,26 @@
                 try {
                     let longURL = this.longURL;
                     new URL(longURL);
-                    axios.get('https://api.weibo.com/2/short_url/shorten.json', {
-                        params: {
-                            source: 569452181,
-                            url_long: longURL,
-                        }
-                    })
-                        .then(response => (this.shortURL = response.urls[0].url_short))
-                        .catch(error => (this.shortURL = error))
+                    // axios.get('https://api.weibo.com/2/short_url/shorten.json', {
+                    //     params: {
+                    //         source: 569452181,
+                    //         url_long: longURL,
+                    //         // callback: '__jp1',
+                    //     }
+                    // })
+                    //     .then(response => (this.shortURL = response.urls[0].url_short))
+                    //     // .then(response => {
+                    //     //     let result = JSON.parse(response.data.substring(10, response.data.length-13));
+                    //     //     this.shortURL = result.data.urls[0].url_short;
+                    //     // })
+                    //     .catch(error => (this.shortURL = error));
+                    jsonp('https://api.weibo.com/2/short_url/shorten.json', {source: 569452181, url_long: longURL})
+                        .then(result => {
+                            this.shortURL = result.data.urls[0].url_short
+                        })
+                        .catch(err => {
+                            this.shortURL = err.toString()
+                        })
                 } catch (e) {
                     this.shortURL = "invalid url"
                 }
