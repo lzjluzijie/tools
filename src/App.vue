@@ -3,7 +3,7 @@
         <nav class="navbar" role="navigation" aria-label="main navigation">
             <div class="navbar-brand">
                 <router-link id="navbar-home" class="navbar-item" to="/home">
-                    <img alt="halulu" src="https://halu.lu/favicon-32x32.png"><strong>Tools</strong>
+                    <strong>Tools</strong>
                 </router-link>
             </div>
 
