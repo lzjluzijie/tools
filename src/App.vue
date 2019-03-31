@@ -1,6 +1,7 @@
 <template>
     <div id="app">
-        <nav class="navbar" role="navigation" aria-label="main navigation">
+        <nav class="navbar is-info" role="navigation" aria-label="main navigation">
+            <div class="container">
             <div class="navbar-brand">
                 <router-link id="navbar-home" class="navbar-item" to="/home">
                     <strong>Tools</strong>
@@ -22,9 +23,10 @@
                        target="_blank">Github</a>
                 </div>
             </div>
+            </div>
         </nav>
         <section>
-            <div class="container">
+            <div class="container" style="padding-top: 2rem">
                 <router-view></router-view>
             </div>
         </section>

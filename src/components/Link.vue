@@ -133,7 +133,7 @@
                     delete window[callbackName];
                     document.body.removeChild(node);
                     if (result) {
-                        this.shortURL = 'https:' + result.data.urls[0].url_short.slice(5);
+                        this.shortURL = 'https' + result.data.urls[0].url_short.slice(4);
                     } else {
                         this.shortURL = "no data";
                     }
