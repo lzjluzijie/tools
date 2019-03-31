@@ -45,7 +45,7 @@
 </template>
 
 <script>
-    import SimpleBase from 'simple-base'
+    import * as SimpleBase from 'simple-base'
     import base32 from 'hi-base32'
 
     export default {
