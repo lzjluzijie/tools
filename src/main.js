@@ -11,6 +11,7 @@ import Home from './components/Home.vue'
 import Hash from './components/Hash.vue'
 import Encode from './components/Encode.vue'
 import Link from './components/Link.vue'
+import Json from './components/Json.vue'
 
 const routes = [
     {path: "/", redirect: 'home'},
@@ -18,6 +19,7 @@ const routes = [
     {path: '/hash', component: Hash},
     {path: '/encode', component: Encode},
     {path: '/link', component: Link},
+    {path: '/json', component: Json},
 ];
 
 const router = new VueRouter({
