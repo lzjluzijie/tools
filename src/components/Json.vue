@@ -1,16 +1,26 @@
 <template>
-    <div class="columns">
-        <div class="column">
-            <textarea class="textarea" id="input" data-clipboard-target="#input" v-model="input"></textarea>
+    <div>
+        <div class="columns">
+            <div class="column">
+                <textarea class="textarea" id="input" v-model="input"></textarea>
+            </div>
+
+            <div class="column">
+                <textarea class="textarea" id="output" v-model="output" readonly></textarea>
+            </div>
         </div>
 
-        <div class="column">
-            <textarea class="textarea" id="output" data-clipboard-target="#output" v-model="output" readonly></textarea>
-        </div>
+        <button class="button clipboard" data-clipboard-target="#input">Copy input</button>
+
+        <button class="button clipboard" data-clipboard-target="#output">Copy output</button>
     </div>
 </template>
 
 <script>
+    import ClipBorad from 'clipboard'
+
+    new ClipBorad(".clipboard");
+
     export default {
         name: "Json",
         data() {
@@ -27,8 +37,9 @@
                     j = JSON.parse(input);
                 } catch (e) {
                     window.console.log(e);
-                    return "error"
+                    return e.toString()
                 }
+
                 return JSON.stringify(j, null, 4)
             },
         }
