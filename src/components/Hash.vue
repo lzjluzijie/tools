@@ -103,8 +103,8 @@
     import {sha256, sha224} from 'js-sha256';
     import {sha512, sha384} from 'js-sha512';
     import {sha3_256, sha3_512, sha3_384, sha3_224, shake128, shake256} from 'js-sha3';
-    import {sha1} from 'js-sha1';
-    import {md5} from 'js-md5';
+    import sha1 from 'js-sha1';
+    import md5 from 'js-md5';
     import {crc32} from 'js-crc';
     import ripemd160 from 'crypto-js/ripemd160'
 
