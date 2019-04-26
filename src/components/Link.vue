@@ -78,8 +78,7 @@
 
                 //SharePoint
                 if (host.slice(-14) === "sharepoint.com" || host.slice(-13) === "sharepoint.cn") {
-                    url.searchParams.set("download", "1");
-                    return url.toString()
+                    return (sharingURL.substring(0, sharingURL.lastIndexOf('/')) + "/_layouts/15/download.aspx?share=" + sharingURL.substring(sharingURL.lastIndexOf('/') + 1).split("?")[0]).replace("/:i:/g", "").replace("/:u:/g", "")
                 }
 
                 //OneDrive
