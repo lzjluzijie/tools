@@ -4,8 +4,8 @@ git config --global user.email circleci@halu.lu
 git config --global user.name halulu-circleci
 git clone git@github.com:lzjluzijie/tools.git -b gh-pages gh-pages
 
-sudo npm install
-npm run build
+sudo yarn install
+yarn run build
 cp gh-pages/.git dist -r
 
 cd dist

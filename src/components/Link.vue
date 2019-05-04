@@ -78,7 +78,9 @@
 
                 //SharePoint
                 if (host.slice(-14) === "sharepoint.com" || host.slice(-13) === "sharepoint.cn") {
-                    return (sharingURL.substring(0, sharingURL.lastIndexOf('/')) + "/_layouts/15/download.aspx?share=" + sharingURL.substring(sharingURL.lastIndexOf('/') + 1).split("?")[0]).replace("/:i:/g", "").replace("/:u:/g", "")
+                    const i = sharingURL.indexOf(":/g");
+                    sharingURL = sharingURL.substring(0,i-3) + sharingURL.substring(i+3);
+                    return (sharingURL.substring(0, sharingURL.lastIndexOf('/')) + "/_layouts/15/download.aspx?share=" + sharingURL.substring(sharingURL.lastIndexOf('/') + 1).split("?")[0])
                 }
 
                 //OneDrive
