@@ -12,6 +12,7 @@ import Hash from './components/Hash.vue'
 import Encode from './components/Encode.vue'
 import Link from './components/Link.vue'
 import Json from './components/Json.vue'
+import Video from './components/Video.vue'
 
 const routes = [
     {path: "/", redirect: 'home'},
@@ -20,6 +21,7 @@ const routes = [
     {path: '/encode', component: Encode},
     {path: '/link', component: Link},
     {path: '/json', component: Json},
+    {path: '/video', component: Video},
 ];
 
 const router = new VueRouter({

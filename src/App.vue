@@ -14,6 +14,7 @@
                     <router-link id="navbar-encode" class="navbar-item" to="/encode">Encode</router-link>
                     <router-link id="navbar-link" class="navbar-item" to="/link">Link</router-link>
                     <router-link id="navbar-json" class="navbar-item" to="/json">Json</router-link>
+                    <router-link id="navbar-video" class="navbar-item" to="/video">Video</router-link>
                 </div>
 
                 <div class="navbar-end">
