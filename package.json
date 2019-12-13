@@ -23,7 +23,7 @@
     "lodash": "^4.17.11",
     "markdown-loader": "^5.0.0",
     "marked": "^0.7.0",
-    "npm": "^6.9.0",
+    "npm": "^6.13.4",
     "sass-loader": "^8.0.0",
     "simple-base": "^1.0.0",
     "vue": "^2.6.6",
