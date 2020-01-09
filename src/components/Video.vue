@@ -39,24 +39,26 @@
                         console.log(response.ok)
                         response.text()
                             .then((data => {
-                                // console.log(data)
+                                //console.log(data)
                                 let a = data.split('&')
                                 for (let o of a) {
-                                    if (o.substr(0, 14) === "adaptive_fmts=") {
-                                        let va = decodeURIComponent(o.substr(14)).split(',')
-                                        for (let v of va) {
-                                            console.log(v)
-                                            let params = {}
-                                            for (let param of v.split('&')) {
-                                                let p = param.split('=')
-                                                params[p[0]] = p[1]
-                                            }
+                                    //console.log(o)
+                                    if (o.substr(0, 16) === "player_response=") {
+                                        //console.log("yes")
+                                        let va = decodeURIComponent(o.substr(16)).split(',')
+                                        let p = JSON.parse(va)
+                                        console.log(p)
 
-                                            if (params["itag"] === "299") {
-                                                this.output = decodeURIComponent(params["url"])
+                                        let streamingData = p.streamingData
+                                        console.log(streamingData)
+
+                                        for (let v of streamingData.adaptiveFormats) {
+                                            console.log(v)
+
+                                            if (v.itag === 299) {
+                                                this.output = v.url
                                                 return
                                             }
-                                            console.log(params)
                                         }
 
                                         return
