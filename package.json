@@ -27,6 +27,7 @@
     "sass-loader": "^8.0.0",
     "simple-base": "^1.0.0",
     "vue": "^2.6.11",
+    "vue-good-table": "^2.18.1",
     "vue-router": "^3.0.2"
   },
   "devDependencies": {

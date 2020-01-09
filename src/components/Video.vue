@@ -1,33 +1,61 @@
 <template>
     <div>
         <div class="columns">
-            <div class="column">
+            <div class="column is-6">
                 <textarea class="textarea" id="input" v-model="input"></textarea>
             </div>
 
-            <div class="column">
-                <textarea class="textarea" id="output" v-model="output" readonly></textarea>
+            <div class="column is-6">
+                <p class="content" v-if="showEmpty">
+                    You need to enter youtube video id...
+                </p>
+
+                <vue-good-table
+                        v-if="showTable"
+                        :columns="columns"
+                        :rows="rows"
+                        :sort-options="{enabled: true, initialSortBy: {field: 'itag', type: 'asc'}}"
+                />
             </div>
         </div>
 
-        <button class="button clipboard" data-clipboard-target="#input">Copy input</button>
-
-        <button class="button clipboard" data-clipboard-target="#output">Copy output</button>
     </div>
 </template>
 
 <script>
     import ClipBorad from 'clipboard'
-    // import axios from 'axios'
+    import 'vue-good-table/dist/vue-good-table.css'
+    import { VueGoodTable } from 'vue-good-table';
 
     new ClipBorad(".clipboard");
 
     export default {
-        name: "Json",
+        name: "Video",
+        components: {
+            VueGoodTable,
+        },
         data() {
             return {
                 input: '',
-                output: 'You need to enter youtube video id...'
+                showEmpty: true,
+                showTable: false,
+                columns: [
+                    {
+                        label: 'itag',
+                        field: 'itag',
+                        type: 'number',
+                    },
+                    {
+                        label: 'Size',
+                        field: 'contentLength',
+                        type: 'number',
+                    },
+                    {
+                        label: 'URL',
+                        field: 'url',
+                    },
+                ],
+                rows: [],
             }
         },
         watch: {
@@ -35,8 +63,13 @@
                 let input = this.input
 
                 if (input === "") {
-                    return "You need to enter youtube video id..."
+                    this.showEmpty = true
+                    this.showTable = false
+                    return
                 }
+
+                this.showEmpty = false
+                this.showTable = true
 
                 fetch('https://cors.halulu.workers.dev/?https%3A%2F%2Fwww.youtube.com%2Fget_video_info%3Fvideo_id%3D' + input)
                     .then(response => {
@@ -57,12 +90,8 @@
                                         console.log(streamingData)
 
                                         for (let v of streamingData.adaptiveFormats) {
+                                            this.rows.push(v)
                                             console.log(v)
-
-                                            if (v.itag === 299) {
-                                                this.output = v.url
-                                                return
-                                            }
                                         }
 
                                         return
