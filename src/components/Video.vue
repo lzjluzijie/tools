@@ -27,10 +27,13 @@
 </template>
 
 <script>
+    import Vue from 'vue'
     import ClipBorad from 'clipboard'
     import 'vue-good-table/dist/vue-good-table.css'
     import {VueGoodTable} from 'vue-good-table';
+    import CopyButton from "./CopyButton";
 
+    let copyButton = Vue.extend(CopyButton)
     new ClipBorad(".clipboard");
 
     export default {
@@ -57,6 +60,8 @@
                     {
                         label: 'URL',
                         field: 'url',
+                        html: true,
+                        formatFn: this.formatCopyButton,
                     },
                 ],
                 rows: [
@@ -89,6 +94,13 @@
             clearTable: function () {
                 this.rows[0].children = [];
                 this.rows[1].children = []
+            },
+            formatCopyButton: function (v) {
+                let b = new copyButton({
+                    propsData: { url: v.url }
+                })
+                b.$mount()
+                return b
             }
         },
         watch: {
@@ -126,12 +138,11 @@
                                         console.log(streamingData);
 
                                         for (let v of streamingData.formats) {
-                                            this.add(v)
+                                            this.addTable(v)
                                         }
 
                                         for (let v of streamingData.adaptiveFormats) {
-                                            this.rows[0].children.push(v);
-                                            console.log(v)
+                                            this.addTable(v)
                                         }
 
                                         return
