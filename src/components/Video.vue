@@ -27,12 +27,16 @@
         data() {
             return {
                 input: '',
-                output: ''
+                output: 'You need to enter youtube video id...'
             }
         },
         watch: {
             input: function () {
                 let input = this.input
+
+                if (input === "") {
+                    return "You need to enter youtube video id..."
+                }
 
                 fetch('https://cors.halulu.workers.dev/?https%3A%2F%2Fwww.youtube.com%2Fget_video_info%3Fvideo_id%3D' + input)
                     .then(response => {

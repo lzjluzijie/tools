@@ -31,12 +31,16 @@
         computed: {
             output: function () {
                 let input = this.input;
+                if (input === "") {
+                    return "You need to enter something..."
+                }
+
                 let j = {};
 
                 try {
-                    j = JSON.parse(input);
+                    j = JSON.parse(input)
                 } catch (e) {
-                    window.console.log(e);
+                    window.console.log(e)
                     return e.toString()
                 }
 
