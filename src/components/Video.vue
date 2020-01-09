@@ -2,7 +2,7 @@
     <div>
         <div class="columns">
             <div class="column is-6">
-                <textarea class="textarea" id="input" v-model="input"></textarea>
+                <input id="input" class="input" type="text" placeholder="youtube video id here..." v-model="input" />
             </div>
 
             <div class="column is-6">
@@ -11,14 +11,22 @@
                 </p>
 
                 <div v-if="showTable">
-                    <h3 class="title is-3"> {{ title }} </h3>
+                    <h3 class="title is-3"><a v-bind:href="url" target="_blank"> Youtube : {{ title }} </a></h3>
 
                     <vue-good-table
                             :columns="columns"
                             :groupOptions="{enabled: true}"
                             :rows="rows"
-                            :sort-options="{enabled: true, initialSortBy: {field: 'itag', type: 'asc'}}"
-                    />
+                            :sort-options="{enabled: true, initialSortBy: {field: 'itag', type: 'asc'}}">
+                        <template slot="table-row" slot-scope="props">
+                            <span v-if="props.column.field === 'url'">
+                               <button class="clipboard button is-primary is-fullwidth" v-bind:data-clipboard-text="props.row[props.column.field]">Click to copy direct URL</button>
+                             </span>
+                            <span v-else>
+                                {{props.formattedRow[props.column.field]}}
+                            </span>
+                        </template>
+                    </vue-good-table>
                 </div>
             </div>
         </div>
@@ -27,13 +35,10 @@
 </template>
 
 <script>
-    import Vue from 'vue'
     import ClipBorad from 'clipboard'
     import 'vue-good-table/dist/vue-good-table.css'
     import {VueGoodTable} from 'vue-good-table';
-    import CopyButton from "./CopyButton";
 
-    let copyButton = Vue.extend(CopyButton)
     new ClipBorad(".clipboard");
 
     export default {
@@ -83,24 +88,17 @@
         },
         methods: {
             addTable: function (v) {
-                if (v.mimeType.substr(5) === "video") {
+                if (v.mimeType.substr(0, 5) === "video") {
                     this.rows[0].children.push(v);
-                    console.log(v)
                 } else {
                     this.rows[1].children.push(v);
-                    console.log(v)
                 }
+
+                console.log(v)
             },
             clearTable: function () {
                 this.rows[0].children = [];
                 this.rows[1].children = []
-            },
-            formatCopyButton: function (v) {
-                let b = new copyButton({
-                    propsData: { url: v.url }
-                })
-                b.$mount()
-                return b
             }
         },
         watch: {
@@ -154,7 +152,12 @@
                 // .catch(error => (this.shortURL = error))
 
                 return ''
-            },
+            }
+        },
+        computed: {
+            url: function () {
+                return "https://www.youtube.com/watch?v=" + this.input
+            }
         }
     }
 </script>
