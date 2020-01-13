@@ -22,7 +22,7 @@
                        target="_blank">Halulu</a>
 
                     <a class="navbar-item" id="navbar-github" href="https://github.com/lzjluzijie/tools"
-                       target="_blank">Github</a>
+                       target="_blank">GitHub</a>
                 </div>
             </div>
             </div>
