@@ -6,13 +6,13 @@
             </div>
 
             <div class="column is-6">
-                <p class="content" v-if="showEmpty">
+                <p class="content" v-if="!id">
                     You need to enter youtube video id...
                 </p>
 
-                <div v-if="showTable">
+                <div v-if="id">
                     <h3 class="title is-3"><a v-bind:href="url" target="_blank"> Youtube : {{ title }} </a></h3>
-
+                    <h4 class="title is-4"> Length : {{  new Date(1000 * length).toISOString().substr(11, 8) }} </h4>
                     <vue-good-table
                             :columns="columns"
                             :groupOptions="{enabled: true}"
@@ -49,8 +49,7 @@
         data() {
             return {
                 input: '',
-                showEmpty: true,
-                showTable: false,
+                length: null,
                 columns: [
                     {
                         label: 'itag',
@@ -107,28 +106,13 @@
             }
         },
         watch: {
-            input: function () {
-                let input = this.input;
-
-                if (input === "") {
-                    this.showEmpty = true;
-                    this.showTable = false;
-                    return
-                }
-
-                let id = this.youtubeURL(input)
-                if (!id) {
-                    id = input
-                }
-
-                this.showEmpty = false;
-                this.showTable = true;
-
-                this.clearTable();
+            id: function () {
+                let id = this.id
+                this.clearTable()
 
                 fetch('https://cors.halulu.workers.dev/?https%3A%2F%2Fwww.youtube.com%2Fget_video_info%3Fvideo_id%3D' + id)
                     .then(response => {
-                        console.log(response.ok);
+                        //console.log(response.ok);
                         response.text()
                             .then((data => {
                                 //console.log(data)
@@ -140,8 +124,6 @@
                                         let p = JSON.parse(va);
                                         console.log(p);
 
-                                        this.title = p.videoDetails.title;
-
                                         let streamingData = p.streamingData;
                                         console.log(streamingData);
 
@@ -152,6 +134,9 @@
                                         for (let v of streamingData.adaptiveFormats) {
                                             this.addTable(v)
                                         }
+
+                                        this.title = p.videoDetails.title;
+                                        this.length = p.videoDetails.lengthSeconds
 
                                         return
                                     }
@@ -165,8 +150,11 @@
             }
         },
         computed: {
+            id : function () {
+                return this.youtubeURL(this.input)? this.youtubeURL(this.input) : this.input
+            },
             url: function () {
-                return "https://www.youtube.com/watch?v=" + this.input
+                return "https://www.youtube.com/watch?v=" + this.id
             }
         }
     }
