@@ -66,7 +66,6 @@
                         label: 'URL',
                         field: 'url',
                         html: true,
-                        formatFn: this.formatCopyButton,
                     },
                 ],
                 rows: [
@@ -99,6 +98,12 @@
             clearTable: function () {
                 this.rows[0].children = [];
                 this.rows[1].children = []
+            },
+            youtubeURL: function (url) {
+                // eslint-disable-next-line no-useless-escape
+                let regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+                let match = url.match(regExp);
+                return (match&&match[7].length === 11)? match[7] : false;
             }
         },
         watch: {
@@ -111,12 +116,17 @@
                     return
                 }
 
+                let id = this.youtubeURL(input)
+                if (!id) {
+                    id = input
+                }
+
                 this.showEmpty = false;
                 this.showTable = true;
 
                 this.clearTable();
 
-                fetch('https://cors.halulu.workers.dev/?https%3A%2F%2Fwww.youtube.com%2Fget_video_info%3Fvideo_id%3D' + input)
+                fetch('https://cors.halulu.workers.dev/?https%3A%2F%2Fwww.youtube.com%2Fget_video_info%3Fvideo_id%3D' + id)
                     .then(response => {
                         console.log(response.ok);
                         response.text()
