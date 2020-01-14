@@ -2,15 +2,16 @@
     <div id="encode">
         <div class="columns">
             <div class="column is-2">
-                <h2 id="title" class="title is-2">Encode</h2>
+                <h2 id="encode-title" class="title is-2" v-if="mode === 'encode'">Encode</h2>
+                <h2 id="decode-title" class="title is-2" v-else>Decode</h2>
             </div>
 
             <div class="column is-10" style="text-align: center">
-                <div id="encode-arrow" v-on:click="change(true)">
+                <div id="encode-arrow" v-on:click="change(true)" v-if="mode === 'encode'">
                     <h2 class="subtitle is-2" style="display: inline">raw→enc</h2>
                 </div>
 
-                <div id="decode-arrow" v-on:click="change(false)" style="display: none">
+                <div id="decode-arrow" v-on:click="change(false)" v-else>
                     <h2 class="subtitle is-2" style="display: inline">raw←enc</h2>
                 </div>
             </div>
@@ -33,12 +34,11 @@
             </div>
 
             <div class="column is-5">
-                <textarea class="textarea" id="raw" v-model="raw"></textarea>
+                <textarea class="textarea" id="raw" v-model="raw" :readonly="mode === 'decode'"/>
             </div>
 
             <div class="column is-5">
-                <textarea class="textarea" id="enc" v-model="enc"
-                          readonly></textarea>
+                <textarea class="textarea" id="enc" v-model="enc" :readonly="mode === 'encode'" />
             </div>
         </div>
     </div>
@@ -138,17 +138,9 @@
             ,
             change: function (decode) {
                 if (decode) {
-                    document.getElementById("title").innerText = "Decode";
-                    document.getElementById("encode-arrow").style.setProperty("display", "none");
-                    document.getElementById("decode-arrow").style.removeProperty("display");
-                    document.getElementById("enc").removeAttribute("readonly");
-                    document.getElementById("raw").setAttribute("readonly", "readonly")
+                    this.mode = 'decode'
                 } else {
-                    document.getElementById("title").innerText = "Encode";
-                    document.getElementById("decode-arrow").style.setProperty("display", "none");
-                    document.getElementById("encode-arrow").style.removeProperty("display");
-                    document.getElementById("raw").removeAttribute("readonly");
-                    document.getElementById("enc").setAttribute("readonly", "readonly")
+                    this.mode = 'encode'
                 }
             },
             hexEncode: function (raw) {

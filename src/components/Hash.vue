@@ -56,7 +56,7 @@
                 </div>
             </div>
 
-            <div class="field has-addons" id="bits-div" style="display: none">
+            <div class="field has-addons" id="bits-div" v-if="showBits">
                 <p class="control">
                     <a class="button">
                         Output bits
@@ -115,6 +115,7 @@
                 input: '',
                 bits: 0,
                 hashName: 'sha256',
+                showBits: false,
                 fileHashes: []
             }
         },
@@ -214,12 +215,12 @@
                 let hashName = event.target.getAttribute("data-hash-name");
                 if (hashName === "shake128") {
                     this.bits = 256;
-                    document.getElementById("bits-div").style.removeProperty("display")
+                    this.showBits = true
                 } else if (hashName === "shake256") {
                     this.bits = 512;
-                    document.getElementById("bits-div").style.removeProperty("display")
+                    this.showBits = true
                 } else {
-                    document.getElementById("bits-div").style.setProperty("display", "none")
+                    this.showBits = false
                 }
                 this.hashName = hashName;
             },
