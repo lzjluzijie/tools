@@ -30,6 +30,7 @@
                 </p>
                 <ul class="menu-list">
                     <li v-on:click="click"><a class="hash-name" data-hash-name="sha1">SHA1</a></li>
+                    <li v-on:click="click"><a class="hash-name" data-hash-name="md4">MD4</a></li>
                     <li v-on:click="click"><a class="hash-name" data-hash-name="md5">MD5</a></li>
                     <li v-on:click="click"><a class="hash-name" data-hash-name="crc32">CRC32</a></li>
                     <li v-on:click="click"><a class="hash-name" data-hash-name="ripemd160">RIPEMD-160</a>
@@ -104,6 +105,7 @@
     import {sha512, sha384} from 'js-sha512';
     import {sha3_256, sha3_512, sha3_384, sha3_224, shake128, shake256} from 'js-sha3';
     import sha1 from 'js-sha1';
+    import md4 from 'js-md4';
     import md5 from 'js-md5';
     import {crc32} from 'js-crc';
     import ripemd160 from 'crypto-js/ripemd160'
@@ -189,6 +191,9 @@
                     //others
                     case "sha1":
                         hash = sha1(input);
+                        break;
+                    case "md4":
+                        hash = md4(input);
                         break;
                     case "md5":
                         hash = md5(input);
