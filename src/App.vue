@@ -32,12 +32,36 @@
                 <router-view></router-view>
             </div>
         </section>
+        <footer class="footer" style="margin-top: 100px">
+            <div class="content has-text-centered">
+                <p>
+                    <strong>Tools</strong> by <a href="https://halu.lu/" target="_blank">Halulu</a>. Automatically built by CircleCI. <a :href="github" target="_blank"> {{ gitShort }} </a>
+                </p>
+            </div>
+        </footer>
     </div>
 </template>
 
 <script>
+    import git from '../git.json'
+
     export default {
         name: 'app',
+        data() {
+          return {
+              gitHash: "",
+              gitShort: ""
+          }
+        },
+        mounted() {
+            this.gitHash = git.commit
+            this.gitShort = git.abbreviated_commit
+        },
+        computed: {
+          github: function () {
+                return "https://github.com/lzjluzijie/tools/commit/" + this.gitHash
+          }
+        }
     }
 </script>
 
