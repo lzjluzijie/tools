@@ -6,21 +6,21 @@
                     SHA2
                 </p>
                 <ul class="menu-list">
-                    <li v-for="algo in algos.sha2" :key="algo" v-on:click="hashName = algo" :class="{'is-active': hashName === algo}"><a class="hash-name"> {{ algo }} </a></li>
+                    <li v-for="algo in algos.sha2" :key="algo" v-on:click="hashName = algo"><a :class="{'is-active': hashName === algo}"> {{ algo }} </a></li>
                 </ul>
 
                 <p class="menu-label">
                     SHA3
                 </p>
                 <ul class="menu-list">
-                    <li v-for="algo in algos.sha3" :key="algo" v-on:click="hashName = algo" :class="{'is-active': hashName === algo}"><a class="hash-name"> {{ algo }} </a></li>
+                    <li v-for="algo in algos.sha3" :key="algo" v-on:click="hashName = algo"><a :class="{'is-active': hashName === algo}"> {{ algo }} </a></li>
                 </ul>
 
                 <p class="menu-label">
                     Others
                 </p>
                 <ul class="menu-list">
-                    <li v-for="algo in algos.others" :key="algo" v-on:click="hashName = algo" :class="{'is-active': hashName === algo}"><a class="hash-name"> {{ algo }} </a></li>
+                    <li v-for="algo in algos.others" :key="algo" v-on:click="hashName = algo"><a :class="{'is-active': hashName === algo}"> {{ algo }} </a></li>
                 </ul>
             </aside>
         </div>
@@ -198,13 +198,10 @@
 
                 return hash
             },
-            click: function (event) {
+            //click: function (event) {
                 //watch this
-                document.getElementById("files").value = "";
-
-                let hashName = event.target.getAttribute("data-hash-name");
-                this.hashName = hashName;
-            },
+            //    document.getElementById("files").value = "";
+            //},
             fileChange: function (event) {
                 let files = event.target.files;
                 for (var i = 0; i < files.length; i++) {
