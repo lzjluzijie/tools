@@ -6,35 +6,21 @@
                     SHA2
                 </p>
                 <ul class="menu-list">
-                    <li v-on:click="click"><a class="hash-name is-active" data-hash-name="sha256">SHA256</a>
-                    </li>
-                    <li v-on:click="click"><a class="hash-name" data-hash-name="sha512">SHA512</a></li>
-                    <li v-on:click="click"><a class="hash-name" data-hash-name="sha384">SHA384</a></li>
-                    <li v-on:click="click"><a class="hash-name" data-hash-name="sha224">SHA224</a></li>
+                    <li v-for="algo in algos.sha2" :key="algo" v-on:click="hashName = algo" :class="{'is-active': hashName === algo}"><a class="hash-name"> {{ algo }} </a></li>
                 </ul>
 
                 <p class="menu-label">
                     SHA3
                 </p>
                 <ul class="menu-list">
-                    <li v-on:click="click"><a class="hash-name" data-hash-name="sha3-256">SHA3-256</a></li>
-                    <li v-on:click="click"><a class="hash-name" data-hash-name="sha3-512">SHA3-512</a></li>
-                    <li v-on:click="click"><a class="hash-name" data-hash-name="sha3-384">SHA3-384</a></li>
-                    <li v-on:click="click"><a class="hash-name" data-hash-name="sha3-224">SHA3-224</a></li>
-                    <li v-on:click="click"><a class="hash-name" data-hash-name="shake128">Shake128</a></li>
-                    <li v-on:click="click"><a class="hash-name" data-hash-name="shake256">Shake256</a></li>
+                    <li v-for="algo in algos.sha3" :key="algo" v-on:click="hashName = algo" :class="{'is-active': hashName === algo}"><a class="hash-name"> {{ algo }} </a></li>
                 </ul>
 
                 <p class="menu-label">
                     Others
                 </p>
                 <ul class="menu-list">
-                    <li v-on:click="click"><a class="hash-name" data-hash-name="sha1">SHA1</a></li>
-                    <li v-on:click="click"><a class="hash-name" data-hash-name="md4">MD4</a></li>
-                    <li v-on:click="click"><a class="hash-name" data-hash-name="md5">MD5</a></li>
-                    <li v-on:click="click"><a class="hash-name" data-hash-name="crc32">CRC32</a></li>
-                    <li v-on:click="click"><a class="hash-name" data-hash-name="ripemd160">RIPEMD-160</a>
-                    </li>
+                    <li v-for="algo in algos.others" :key="algo" v-on:click="hashName = algo" :class="{'is-active': hashName === algo}"><a class="hash-name"> {{ algo }} </a></li>
                 </ul>
             </aside>
         </div>
@@ -57,7 +43,7 @@
                 </div>
             </div>
 
-            <div class="field has-addons" id="bits-div" v-if="showBits">
+            <div class="field has-addons" id="bits-div" v-if="hashName === 'shake128' || hashName === 'shake256'">
                 <p class="control">
                     <a class="button">
                         Output bits
@@ -117,7 +103,11 @@
                 input: '',
                 bits: 0,
                 hashName: 'sha256',
-                showBits: false,
+                algos: {
+                    'sha2': ['sha256', 'sha512', 'sha384', 'sha224'],
+                    'sha3' : ['sha3-256', 'sha3-512', 'sha3-384', 'sha3-224', 'shake128', 'shake256'],
+                    'others' : ['sha1', 'md4', 'md5', 'crc32', 'ripemd160']
+                },
                 fileHashes: []
             }
         },
@@ -209,24 +199,10 @@
                 return hash
             },
             click: function (event) {
+                //watch this
                 document.getElementById("files").value = "";
 
-                let s = document.getElementsByClassName("hash-name");
-                for (let i = 0; i < s.length; i++) {
-                    s[i].classList.remove("is-active")
-                }
-                event.target.classList.add("is-active");
-
                 let hashName = event.target.getAttribute("data-hash-name");
-                if (hashName === "shake128") {
-                    this.bits = 256;
-                    this.showBits = true
-                } else if (hashName === "shake256") {
-                    this.bits = 512;
-                    this.showBits = true
-                } else {
-                    this.showBits = false
-                }
                 this.hashName = hashName;
             },
             fileChange: function (event) {

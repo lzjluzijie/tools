@@ -131,8 +131,7 @@
                 }
                 event.target.classList.add("is-active");
 
-                let encodeName = event.target.getAttribute("data-encode-name");
-                this.encodeName = encodeName;
+                this.encodeName = event.target.getAttribute("data-encode-name");
                 this.change(false)
             }
             ,
