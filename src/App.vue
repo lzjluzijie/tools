@@ -10,19 +10,39 @@
 
         <div id="navbar-menu" class="navbar-menu">
           <div class="navbar-start">
-            <router-link id="navbar-hash" class="navbar-item" to="/hash">Hash</router-link>
-            <router-link id="navbar-encode" class="navbar-item" to="/encode">Encode</router-link>
-            <router-link id="navbar-link" class="navbar-item" to="/link">Link</router-link>
-            <router-link id="navbar-json" class="navbar-item" to="/json">Json</router-link>
-            <router-link id="navbar-video" class="navbar-item" to="/video">Video</router-link>
+            <router-link id="navbar-hash" class="navbar-item" to="/hash"
+              >Hash</router-link
+            >
+            <router-link id="navbar-encode" class="navbar-item" to="/encode"
+              >Encode</router-link
+            >
+            <router-link id="navbar-link" class="navbar-item" to="/link"
+              >Link</router-link
+            >
+            <router-link id="navbar-json" class="navbar-item" to="/json"
+              >Json</router-link
+            >
+            <router-link id="navbar-video" class="navbar-item" to="/video"
+              >Video</router-link
+            >
           </div>
 
           <div class="navbar-end">
-            <a class="navbar-item" id="navbar-halulu" href="https://halu.lu/"
-               target="_blank">Halulu</a>
+            <a
+              class="navbar-item"
+              id="navbar-halulu"
+              href="https://halu.lu/"
+              target="_blank"
+              >Halulu</a
+            >
 
-            <a class="navbar-item" id="navbar-github" href="https://github.com/lzjluzijie/tools"
-               target="_blank">GitHub</a>
+            <a
+              class="navbar-item"
+              id="navbar-github"
+              href="https://github.com/lzjluzijie/tools"
+              target="_blank"
+              >GitHub</a
+            >
           </div>
         </div>
       </div>
@@ -35,7 +55,10 @@
     <footer class="footer" style="margin-top: 100px">
       <div class="content has-text-centered">
         <p>
-          <strong>Tools</strong> by <a href="https://halu.lu/" target="_blank">Halulu</a>. Automatically built by CircleCI. <a :href="github" target="_blank"> {{ gitShort }} </a>
+          <strong>Tools</strong> by
+          <a href="https://halu.lu/" target="_blank">Halulu</a>. Automatically
+          built by CircleCI.
+          <a :href="github" target="_blank"> {{ gitShort }} </a>
         </p>
       </div>
     </footer>
@@ -43,27 +66,27 @@
 </template>
 
 <script>
-  // import git from '../git.json'
-  export default {
-    name: 'app',
-    data() {
-      return {
-        gitHash: "",
-        gitShort: ""
-      }
-    },
-    mounted() {
-      this.gitHash = "git.commit"
-      this.gitShort = "git.abbreviated_commit"
-    },
-    computed: {
-      github: function () {
-        return "https://github.com/lzjluzijie/tools/commit/" + this.gitHash
-      }
+// import git from '../git.json'
+export default {
+  name: "app",
+  data() {
+    return {
+      gitHash: "",
+      gitShort: ""
+    };
+  },
+  mounted() {
+    this.gitHash = "git.commit";
+    this.gitShort = "git.abbreviated_commit";
+  },
+  computed: {
+    github: function() {
+      return "https://github.com/lzjluzijie/tools/commit/" + this.gitHash;
     }
   }
+};
 </script>
 
 <style lang="css">
-  @import '../node_modules/bulma/css/bulma.css'
+@import "../node_modules/bulma/css/bulma.css";
 </style>
