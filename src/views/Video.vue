@@ -29,7 +29,7 @@
             :rows="rows"
             :sort-options="{
               enabled: true,
-              initialSortBy: { field: 'itag', type: 'asc' }
+              initialSortBy: { field: 'itag', type: 'asc' },
             }"
           >
             <template slot="table-row" slot-scope="props">
@@ -53,113 +53,113 @@
 </template>
 
 <script>
-import ClipBorad from "clipboard";
-import "vue-good-table/dist/vue-good-table.css";
-import { VueGoodTable } from "vue-good-table";
+import ClipBorad from 'clipboard'
+import 'vue-good-table/dist/vue-good-table.css'
+import { VueGoodTable } from 'vue-good-table'
 
-new ClipBorad(".clipboard");
+new ClipBorad('.clipboard')
 
 export default {
-  name: "Video",
+  name: 'Video',
   components: {
-    VueGoodTable
+    VueGoodTable,
   },
   data() {
     return {
-      input: "",
+      input: '',
       length: null,
       columns: [
         {
-          label: "itag",
-          field: "itag",
-          type: "number"
+          label: 'itag',
+          field: 'itag',
+          type: 'number',
         },
         {
-          label: "Size",
-          field: "contentLength",
-          type: "number"
+          label: 'Size',
+          field: 'contentLength',
+          type: 'number',
         },
         {
-          label: "URL",
-          field: "url",
-          html: true
-        }
+          label: 'URL',
+          field: 'url',
+          html: true,
+        },
       ],
       rows: [
         {
-          mode: "span",
-          label: "Video",
+          mode: 'span',
+          label: 'Video',
           html: false,
-          children: []
+          children: [],
         },
         {
-          mode: "span",
-          label: "Audio",
+          mode: 'span',
+          label: 'Audio',
           html: false,
-          children: []
-        }
+          children: [],
+        },
       ],
-      title: ""
-    };
+      title: '',
+    }
   },
   methods: {
-    addTable: function(v) {
-      if (v.mimeType.substr(0, 5) === "video") {
-        this.rows[0].children.push(v);
+    addTable: function (v) {
+      if (v.mimeType.substr(0, 5) === 'video') {
+        this.rows[0].children.push(v)
       } else {
-        this.rows[1].children.push(v);
+        this.rows[1].children.push(v)
       }
       // console.log(v)
     },
-    clearTable: function() {
-      this.rows[0].children = [];
-      this.rows[1].children = [];
+    clearTable: function () {
+      this.rows[0].children = []
+      this.rows[1].children = []
     },
-    youtubeURL: function(url) {
+    youtubeURL: function (url) {
       // eslint-disable-next-line no-useless-escape
-      const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
-      const match = url.match(regExp);
-      return match && match[7].length === 11 ? match[7] : false;
-    }
+      const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/
+      const match = url.match(regExp)
+      return match && match[7].length === 11 ? match[7] : false
+    },
   },
   watch: {
-    id: function() {
-      const id = this.id;
+    id: function () {
+      const id = this.id
 
-      this.clearTable();
+      this.clearTable()
 
       //todo api似乎更新了
-      fetch("https://cors.halulu.workers.dev/?" + id).then(response => {
-        response.text().then(data => {
-          for (const o of data.split("&")) {
-            if (o.substr(0, 16) === "player_response=") {
-              const p = JSON.parse(decodeURIComponent(o.substr(16)));
+      fetch('https://cors.halulu.workers.dev/?' + id).then((response) => {
+        response.text().then((data) => {
+          for (const o of data.split('&')) {
+            if (o.substr(0, 16) === 'player_response=') {
+              const p = JSON.parse(decodeURIComponent(o.substr(16)))
               for (const v of p.streamingData.formats) {
-                this.addTable(v);
+                this.addTable(v)
               }
               for (const v of p.streamingData.adaptiveFormats) {
-                this.addTable(v);
+                this.addTable(v)
               }
-              this.title = p.videoDetails.title;
-              this.length = p.videoDetails.lengthSeconds;
-              return;
+              this.title = p.videoDetails.title
+              this.length = p.videoDetails.lengthSeconds
+              return
             }
           }
-        });
-      });
+        })
+      })
       // .catch(error => (this.shortURL = error))
-      return "";
-    }
+      return ''
+    },
   },
   computed: {
-    id: function() {
+    id: function () {
       return this.youtubeURL(this.input)
         ? this.youtubeURL(this.input)
-        : this.input;
+        : this.input
     },
-    url: function() {
-      return "https://www.youtube.com/watch?v=" + this.id;
-    }
-  }
-};
+    url: function () {
+      return 'https://www.youtube.com/watch?v=' + this.id
+    },
+  },
+}
 </script>

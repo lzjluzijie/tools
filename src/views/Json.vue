@@ -26,30 +26,30 @@
 </template>
 
 <script>
-import ClipBorad from "clipboard";
-new ClipBorad(".clipboard");
+import ClipBorad from 'clipboard'
+new ClipBorad('.clipboard')
 export default {
-  name: "Json",
+  name: 'Json',
   data() {
     return {
-      input: ""
-    };
+      input: '',
+    }
   },
   computed: {
-    output: function() {
-      const input = this.input;
-      if (input === "") {
-        return "You need to enter something...";
+    output: function () {
+      const input = this.input
+      if (input === '') {
+        return 'You need to enter something...'
       }
-      let j = {};
+      let j = {}
       try {
-        j = JSON.parse(input);
+        j = JSON.parse(input)
       } catch (e) {
-        window.console.log(e);
-        return e.toString();
+        window.console.log(e)
+        return e.toString()
       }
-      return JSON.stringify(j, null, 4);
-    }
-  }
-};
+      return JSON.stringify(j, null, 4)
+    },
+  },
+}
 </script>

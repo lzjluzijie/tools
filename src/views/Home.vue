@@ -12,14 +12,14 @@
 </template>
 
 <script>
-import marked from "marked";
-import md from "!raw-loader!../../README.md";
+import marked from 'marked'
+import md from '!raw-loader!../../README.md'
 export default {
-  name: "Home",
-  mounted: function() {
-    this.$refs.content.innerHTML = marked(md);
-  }
-};
+  name: 'Home',
+  mounted: function () {
+    this.$refs.content.innerHTML = marked(md)
+  },
+}
 </script>
 
 <style scoped></style>

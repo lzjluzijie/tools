@@ -48,11 +48,11 @@
       </div>
     </nav>
     <section>
-      <div class="container" style="padding-top: 2rem">
+      <div class="container" style="padding-top: 2rem;">
         <router-view></router-view>
       </div>
     </section>
-    <footer class="footer" style="margin-top: 100px">
+    <footer class="footer" style="margin-top: 100px;">
       <div class="content has-text-centered">
         <p>
           <strong>Tools</strong> by
@@ -66,27 +66,28 @@
 </template>
 
 <script>
-// import git from '../git.json'
+import git from '../git.json'
+
 export default {
-  name: "app",
+  name: 'app',
   data() {
     return {
-      gitHash: "",
-      gitShort: ""
-    };
+      gitHash: '',
+      gitShort: '',
+    }
   },
   mounted() {
-    this.gitHash = "git.commit";
-    this.gitShort = "git.abbreviated_commit";
+    this.gitHash = git.commit
+    this.gitShort = git.abbreviated_commit
   },
   computed: {
-    github: function() {
-      return "https://github.com/lzjluzijie/tools/commit/" + this.gitHash;
-    }
-  }
-};
+    github: function () {
+      return 'https://github.com/lzjluzijie/tools/commit/' + this.gitHash
+    },
+  },
+}
 </script>
 
 <style lang="css">
-@import "../node_modules/bulma/css/bulma.css";
+@import '../node_modules/bulma/css/bulma.css';
 </style>

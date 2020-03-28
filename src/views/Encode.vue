@@ -8,17 +8,17 @@
         <h2 id="decode-title" class="title is-2" v-else>Decode</h2>
       </div>
 
-      <div class="column is-10" style="text-align: center">
+      <div class="column is-10" style="text-align: center;">
         <div
           id="encode-arrow"
           v-on:click="change(true)"
           v-if="mode === 'encode'"
         >
-          <h2 class="subtitle is-2" style="display: inline">raw→enc</h2>
+          <h2 class="subtitle is-2" style="display: inline;">raw→enc</h2>
         </div>
 
         <div id="decode-arrow" v-on:click="change(false)" v-else>
-          <h2 class="subtitle is-2" style="display: inline">raw←enc</h2>
+          <h2 class="subtitle is-2" style="display: inline;">raw←enc</h2>
         </div>
       </div>
     </div>
@@ -78,123 +78,120 @@
 </template>
 
 <script>
-import * as SimpleBase from "simple-base";
+import * as SimpleBase from 'simple-base'
 //todo
-import base32 from "hi-base32";
+import base32 from 'hi-base32'
 
 export default {
-  name: "Encode",
+  name: 'Encode',
   data() {
     return {
-      raw: "",
-      encodeName: "base64",
-      mode: "encode"
-    };
+      raw: '',
+      encodeName: 'base64',
+      mode: 'encode',
+    }
   },
   computed: {
     enc: {
-      get: function() {
-        const raw = this.raw;
-        const encodeName = this.encodeName;
+      get: function () {
+        const raw = this.raw
+        const encodeName = this.encodeName
 
-        let enc = "error!";
+        let enc = 'error!'
         switch (encodeName) {
-          case "base64":
-            enc = window.btoa(raw);
-            break;
-          case "base64url":
+          case 'base64':
+            enc = window.btoa(raw)
+            break
+          case 'base64url':
             enc = window
               .btoa(raw)
-              .replace(/\+/g, "-")
-              .replace(/\//g, "_")
-              .replace(/=+$/, "");
-            break;
-          case "base58":
-            enc = SimpleBase.encode(raw, 58);
-            break;
-          case "base36":
-            enc = SimpleBase.encode(raw, 36);
-            break;
-          case "base32":
-            enc = base32.encode(raw);
-            break;
-          case "urlencode":
-            enc = encodeURIComponent(raw);
-            break;
-          case "hex":
-            enc = this.hexEncode(raw);
-            break;
+              .replace(/\+/g, '-')
+              .replace(/\//g, '_')
+              .replace(/=+$/, '')
+            break
+          case 'base58':
+            enc = SimpleBase.encode(raw, 58)
+            break
+          case 'base36':
+            enc = SimpleBase.encode(raw, 36)
+            break
+          case 'base32':
+            enc = base32.encode(raw)
+            break
+          case 'urlencode':
+            enc = encodeURIComponent(raw)
+            break
+          case 'hex':
+            enc = this.hexEncode(raw)
+            break
         }
-        return enc;
+        return enc
       },
-      set: function(enc) {
-        const encodeName = this.encodeName;
-        let raw = "error!";
+      set: function (enc) {
+        const encodeName = this.encodeName
+        let raw = 'error!'
         switch (encodeName) {
-          case "base64":
-            raw = window.atob(enc);
-            break;
-          case "base64url":
+          case 'base64':
+            raw = window.atob(enc)
+            break
+          case 'base64url':
             raw = window.atob(
-              enc
-                .replace(/\+/g, "-")
-                .replace(/\//g, "_")
-                .replace(/=+$/, "")
-            );
-            break;
-          case "base58":
-            raw = SimpleBase.decode(enc, 58);
-            break;
-          case "base36":
-            raw = SimpleBase.decode(enc, 36);
-            break;
-          case "base32":
-            raw = base32.decode(enc);
-            break;
-          case "urlencode":
-            raw = decodeURIComponent(enc);
-            break;
-          case "hex":
-            raw = this.hexDecode(enc);
-            break;
+              enc.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')
+            )
+            break
+          case 'base58':
+            raw = SimpleBase.decode(enc, 58)
+            break
+          case 'base36':
+            raw = SimpleBase.decode(enc, 36)
+            break
+          case 'base32':
+            raw = base32.decode(enc)
+            break
+          case 'urlencode':
+            raw = decodeURIComponent(enc)
+            break
+          case 'hex':
+            raw = this.hexDecode(enc)
+            break
         }
-        this.raw = raw;
-        return raw;
-      }
-    }
+        this.raw = raw
+        return raw
+      },
+    },
   },
   methods: {
-    click: function(event) {
-      const s = document.getElementsByClassName("encode-name");
+    click: function (event) {
+      const s = document.getElementsByClassName('encode-name')
       for (let i = 0; i < s.length; i++) {
-        s[i].classList.remove("is-active");
+        s[i].classList.remove('is-active')
       }
-      event.target.classList.add("is-active");
-      this.encodeName = event.target.getAttribute("data-encode-name");
-      this.change(false);
+      event.target.classList.add('is-active')
+      this.encodeName = event.target.getAttribute('data-encode-name')
+      this.change(false)
     },
-    change: function(decode) {
+    change: function (decode) {
       if (decode) {
-        this.mode = "decode";
+        this.mode = 'decode'
       } else {
-        this.mode = "encode";
+        this.mode = 'encode'
       }
     },
-    hexEncode: function(raw) {
-      const arr = [];
+    hexEncode: function (raw) {
+      const arr = []
       for (let n = 0, l = raw.length; n < l; n++) {
-        arr.push(Number(raw.charCodeAt(n)).toString(16));
+        arr.push(Number(raw.charCodeAt(n)).toString(16))
       }
-      return arr.join("");
+      return arr.join('')
     },
-    hexDecode: function(enc) {
-      const hex = enc.toString();
-      let raw = "";
+    hexDecode: function (enc) {
+      const hex = enc.toString()
+      let raw = ''
       for (let n = 0; n < hex.length; n += 2) {
-        raw += String.fromCharCode(parseInt(hex.substr(n, 2), 16));
+        raw += String.fromCharCode(parseInt(hex.substr(n, 2), 16))
       }
-      return raw;
-    }
-  }
-};
+      return raw
+    },
+  },
+}
 </script>
