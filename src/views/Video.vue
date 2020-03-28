@@ -91,7 +91,7 @@
                 } else {
                     this.rows[1].children.push(v);
                 }
-                console.log(v)
+                // console.log(v)
             },
             clearTable: function () {
                 this.rows[0].children = [];
@@ -121,9 +121,9 @@
                                     //console.log(o)
                                     if (o.substr(0, 16) === "player_response=") {
                                         const p = JSON.parse(decodeURIComponent(o.substr(16)).split(','));
-                                        console.log(p);
+                                        // console.log(p);
                                         const streamingData = p.streamingData;
-                                        console.log(streamingData);
+                                        // console.log(streamingData);
                                         for (const v of streamingData.formats) {
                                             this.addTable(v)
                                         }
