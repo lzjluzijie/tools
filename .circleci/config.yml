@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:10.15.3
+      - image: circleci/node:13.11.0
     working_directory: ~/tools
     steps:
       - add_ssh_keys:

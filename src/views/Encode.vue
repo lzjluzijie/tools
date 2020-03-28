@@ -46,6 +46,7 @@
 
 <script>
     import * as SimpleBase from 'simple-base'
+    //todo
     import base32 from 'hi-base32'
 
     export default {
@@ -60,10 +61,10 @@
         computed: {
             enc: {
                 get: function () {
-                    let raw = this.raw;
-                    let encodeName = this.encodeName;
-                    let enc = "error!";
+                    const raw = this.raw;
+                    const encodeName = this.encodeName;
 
+                    let enc = "error!";
                     switch (encodeName) {
                         case "base64":
                             enc = window.btoa(raw);
@@ -87,13 +88,11 @@
                             enc = this.hexEncode(raw);
                             break;
                     }
-
                     return enc
                 },
                 set: function (enc) {
-                    let encodeName = this.encodeName;
+                    const encodeName = this.encodeName;
                     let raw = "error!";
-
                     switch (encodeName) {
                         case "base64":
                             raw = window.atob(enc);
@@ -117,7 +116,6 @@
                             raw = this.hexDecode(enc);
                             break;
                     }
-
                     this.raw = raw;
                     return raw
                 },
@@ -125,12 +123,11 @@
         },
         methods: {
             click: function (event) {
-                let s = document.getElementsByClassName("encode-name");
+                const s = document.getElementsByClassName("encode-name");
                 for (let i = 0; i < s.length; i++) {
                     s[i].classList.remove("is-active")
                 }
                 event.target.classList.add("is-active");
-
                 this.encodeName = event.target.getAttribute("data-encode-name");
                 this.change(false)
             }
@@ -143,17 +140,16 @@
                 }
             },
             hexEncode: function (raw) {
-                var arr = [];
-                for (var n = 0, l = raw.length; n < l; n++) {
-                    var h = Number(raw.charCodeAt(n)).toString(16);
-                    arr.push(h);
+                const arr = [];
+                for (let n = 0, l = raw.length; n < l; n++) {
+                    arr.push(Number(raw.charCodeAt(n)).toString(16));
                 }
                 return arr.join('');
             },
             hexDecode: function (enc) {
-                var hex = enc.toString();
-                var raw = '';
-                for (var n = 0; n < hex.length; n += 2) {
+                const hex = enc.toString();
+                let raw = '';
+                for (let n = 0; n < hex.length; n += 2) {
                     raw += String.fromCharCode(parseInt(hex.substr(n, 2), 16));
                 }
                 return raw;
@@ -161,3 +157,4 @@
         },
     }
 </script>
+

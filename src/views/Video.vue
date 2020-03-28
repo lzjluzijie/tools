@@ -91,7 +91,6 @@
                 } else {
                     this.rows[1].children.push(v);
                 }
-
                 console.log(v)
             },
             clearTable: function () {
@@ -100,52 +99,45 @@
             },
             youtubeURL: function (url) {
                 // eslint-disable-next-line no-useless-escape
-                let regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
-                let match = url.match(regExp);
+                const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+                const match = url.match(regExp);
                 return (match&&match[7].length === 11)? match[7] : false;
             }
         },
         watch: {
             id: function () {
-                let id = this.id
+                const id = this.id
+
                 this.clearTable()
 
+                //todo api似乎更新了
                 fetch('https://cors.halulu.workers.dev/?https%3A%2F%2Fwww.youtube.com%2Fget_video_info%3Fvideo_id%3D' + id)
                     .then(response => {
                         //console.log(response.ok);
                         response.text()
                             .then((data => {
                                 //console.log(data)
-                                let a = data.split('&');
-                                for (let o of a) {
+                                for (const o of data.split('&')) {
                                     //console.log(o)
                                     if (o.substr(0, 16) === "player_response=") {
-                                        let va = decodeURIComponent(o.substr(16)).split(',');
-                                        let p = JSON.parse(va);
+                                        const p = JSON.parse(decodeURIComponent(o.substr(16)).split(','));
                                         console.log(p);
-
-                                        let streamingData = p.streamingData;
+                                        const streamingData = p.streamingData;
                                         console.log(streamingData);
-
-                                        for (let v of streamingData.formats) {
+                                        for (const v of streamingData.formats) {
                                             this.addTable(v)
                                         }
-
-                                        for (let v of streamingData.adaptiveFormats) {
+                                        for (const v of streamingData.adaptiveFormats) {
                                             this.addTable(v)
                                         }
-
                                         this.title = p.videoDetails.title;
                                         this.length = p.videoDetails.lengthSeconds
-
                                         return
                                     }
                                 }
                             }))
-
                     });
                 // .catch(error => (this.shortURL = error))
-
                 return ''
             }
         },

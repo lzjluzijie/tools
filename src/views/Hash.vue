@@ -75,10 +75,10 @@
 
             <div id="fileHashes">
                 <ul style="word-wrap:break-word">
-                <li class="content hash-result clipboard" v-for="fileHash in fileHashes" :key="fileHash.id" v-bind:data-clipboard-text="fileHash.hash">
-                {{ fileHash.hashName }} {{ fileHash.fileName }}:
-                {{ fileHash.hash }}
-                </li>
+                    <li class="content hash-result clipboard" v-for="fileHash in fileHashes" :key="fileHash.id" v-bind:data-clipboard-text="fileHash.hash">
+                        {{ fileHash.hashName }} {{ fileHash.fileName }}:
+                        {{ fileHash.hash }}
+                    </li>
                 </ul>
             </div>
         </div>
@@ -89,6 +89,7 @@
     import ClipboardJS from 'clipboard';
     import {sha256, sha224} from 'js-sha256';
     import {sha512, sha384} from 'js-sha512';
+    // eslint-disable-next-line @typescript-eslint/camelcase
     import {sha3_256, sha3_512, sha3_384, sha3_224, shake128, shake256} from 'js-sha3';
     import sha1 from 'js-sha1';
     import md4 from 'js-md4';
@@ -113,21 +114,18 @@
         },
         mounted: function () {
             new ClipboardJS('.clipboard');
-
             // file
             document.getElementById("dropzone").addEventListener("dragover", event => {
                 event.stopPropagation();
                 event.preventDefault();
                 event.dataTransfer.dropEffect = "copy";
             });
-
             document.getElementById("dropzone").addEventListener("drop", event => {
                 event.stopPropagation();
                 event.preventDefault();
 
-                let files = event.dataTransfer.files;
-                for (var i = 0; i < files.length; i++) {
-                    this.fileHash(files[i])
+                for (const file of event.dataTransfer.files) {
+                    this.fileHash(file)
                 }
             });
         },
@@ -138,11 +136,10 @@
         },
         methods: {
             hash: function (input) {
-                let name = this.hashName;
-                let bits = this.bits;
+                const name = this.hashName;
+                const bits = this.bits;
 
                 let hash = "error!";
-
                 switch (name) {
                     //sha2
                     case "sha256":
@@ -157,7 +154,6 @@
                     case "sha224":
                         hash = sha224(input);
                         break;
-
                     //sha3
                     case "sha3-256":
                         hash = sha3_256(input);
@@ -177,7 +173,6 @@
                     case "shake256":
                         hash = shake256(input, bits);
                         break;
-
                     //others
                     case "sha1":
                         hash = sha1(input);
@@ -195,21 +190,20 @@
                         hash = ripemd160(input).toString();
                         break;
                 }
-
                 return hash
             },
             //click: function (event) {
-                //watch this
+            //watch this
             //    document.getElementById("files").value = "";
             //},
             fileChange: function (event) {
-                let files = event.target.files;
-                for (var i = 0; i < files.length; i++) {
+                const files = event.target.files;
+                for (let i = 0; i < files.length; i++) {
                     this.fileHash(files[i])
                 }
             },
             fileHash: function (file) {
-                let reader = new FileReader();
+                const reader = new FileReader();
                 reader.addEventListener("loadend", e => {
                     this.fileHashes.push({
                         "fileName": file.name,
@@ -224,5 +218,4 @@
 </script>
 
 <style scoped>
-
 </style>

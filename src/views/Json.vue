@@ -18,9 +18,7 @@
 
 <script>
     import ClipBorad from 'clipboard'
-
     new ClipBorad(".clipboard");
-
     export default {
         name: "Json",
         data() {
@@ -30,20 +28,17 @@
         },
         computed: {
             output: function () {
-                let input = this.input;
+                const input = this.input;
                 if (input === "") {
                     return "You need to enter something..."
                 }
-
                 let j = {};
-
                 try {
                     j = JSON.parse(input)
                 } catch (e) {
                     window.console.log(e)
                     return e.toString()
                 }
-
                 return JSON.stringify(j, null, 4)
             },
         }

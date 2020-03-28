@@ -9,7 +9,6 @@
 <script>
     import marked from 'marked'
     import md from '!raw-loader!../../README.md'
-
     export default {
         name: "Home",
         mounted: function () {
@@ -19,5 +18,4 @@
 </script>
 
 <style scoped>
-
 </style>
