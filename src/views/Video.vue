@@ -129,7 +129,10 @@ export default {
       this.clearTable()
 
       //todo api似乎更新了
-      fetch('https://cors.halulu.workers.dev/?' + id).then((response) => {
+      fetch(
+        'https://cors.halulu.workers.dev/?https%3A%2F%2Fwww.youtube.com%2Fget_video_info%3Fvideo_id%3D' +
+          id
+      ).then((response) => {
         response.text().then((data) => {
           for (const o of data.split('&')) {
             if (o.substr(0, 16) === 'player_response=') {
