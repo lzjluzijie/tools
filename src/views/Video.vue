@@ -59,6 +59,21 @@ import { VueGoodTable } from 'vue-good-table'
 
 new ClipBorad('.clipboard')
 
+function sizeString(bytes) {
+  if (bytes === undefined) return 'Unknown'
+
+  const thresh = 1024
+  const units = ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']
+  if (Math.abs(bytes) < thresh) return `${bytes} Bytes`
+
+  let u = -1
+  do {
+    bytes /= thresh
+    ++u
+  } while (Math.abs(bytes) >= thresh && u < units.length - 1)
+  return `${bytes.toFixed(1)} ${units[u]}`
+}
+
 export default {
   name: 'Video',
   components: {
@@ -76,8 +91,8 @@ export default {
         },
         {
           label: 'Size',
-          field: 'contentLength',
-          type: 'number',
+          field: 'sizeString',
+          type: 'string',
         },
         {
           label: 'URL',
@@ -130,17 +145,18 @@ export default {
 
       //todo api似乎更新了
       fetch(
-        'https://cors.halulu.workers.dev/?https%3A%2F%2Fwww.youtube.com%2Fget_video_info%3Fvideo_id%3D' +
-          id
+        `https://cors.halu.lu/?https%3A%2F%2Fwww.youtube.com%2Fget_video_info%3Fvideo_id%3D${id}`
       ).then((response) => {
         response.text().then((data) => {
           for (const o of data.split('&')) {
             if (o.substr(0, 16) === 'player_response=') {
               const p = JSON.parse(decodeURIComponent(o.substr(16)))
               for (const v of p.streamingData.formats) {
+                v['sizeString'] = sizeString(v['contentLength'])
                 this.addTable(v)
               }
               for (const v of p.streamingData.adaptiveFormats) {
+                v['sizeString'] = sizeString(v['contentLength'])
                 this.addTable(v)
               }
               this.title = p.videoDetails.title
